@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     {
         rb.MovePosition(Vector3.MoveTowards(rb.position, moveTargetPosition, speed * Time.fixedDeltaTime));
 
-        if(Vector3.Distance(rb.position, moveTargetPosition) < 0.01f)
+        if (Vector3.Distance(rb.position, moveTargetPosition) < 0.01f)
         {
             rb.position = moveTargetPosition;
         }
@@ -26,16 +26,22 @@ public class Player : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-        Vector3 oldTargetPosition = moveTargetPosition;
-        Vector2 input = context.ReadValue<Vector2>();
+        if (context.performed)
+        {
+            if (GameManager.instance.currentGameState != GameManager.GameState.PlayerTurn)
+                return;
+            Vector3 oldTargetPosition = moveTargetPosition;
+            Vector2 input = context.ReadValue<Vector2>();
 
-        if(Mathf.Abs(input.x) == 1.0f)
-        {
-            moveTargetPosition = transform.position +new Vector3(input.x, 0.0f, 0.0f);
-        }
-        else if(Mathf.Abs(input.y) == 1.0f)
-        {
-            moveTargetPosition = transform.position + new Vector3(0.0f, input.y, 0.0f);
+            if (Mathf.Abs(input.x) == 1.0f)
+            {
+                moveTargetPosition = transform.position + new Vector3(input.x, 0.0f, 0.0f);
+            }
+            else if (Mathf.Abs(input.y) == 1.0f)
+            {
+                moveTargetPosition = transform.position + new Vector3(0.0f, input.y, 0.0f);
+            }
+            GameManager.instance.ChangeGameState(GameManager.GameState.LevelTurn);
         }
     }
 
