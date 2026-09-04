@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 226698336}
   m_Layer: 0
   m_Name: Tilemap
-  m_TagString: Untagged
+  m_TagString: Tilemap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -455,6 +455,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   currentGameState: 0
   timeBetweenTurns: 0.25
+  allTiles:
+  - {fileID: 11400000, guid: 917dc6250002d874eb19ee5aeb750be0, type: 2}
+  tileDatas:
+  - {fileID: 11400000, guid: f3a3e90abdc64354693b28082b139d3b, type: 2}
+  map: {fileID: 0}
 --- !u!4 &816467814
 Transform:
   m_ObjectHideFlags: 0
