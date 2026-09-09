@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     public static Player instance;
     [SerializeField] private float speed = 5.0f;
-    private Vector3 moveTargetPos;
+    public Vector3 moveTargetPos;
     public Vector3 pickUpPos;
     Rigidbody2D rb;
     TileBase currentTile;
@@ -78,6 +78,12 @@ public class Player : MonoBehaviour
             {
                 case TileData.TileState.NormalTile:
                     currentTile = GameManager.instance.GetTileBase(0);
+                    break;
+                case TileData.TileState.FireTile:
+                    currentTile = GameManager.instance.GetTileBase(1);
+                    break;
+                case TileData.TileState.GrassTile:
+                    currentTile = GameManager.instance.GetTileBase(2);
                     break;
                 default:
                     return;

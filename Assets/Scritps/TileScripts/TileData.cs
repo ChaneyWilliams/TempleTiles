@@ -12,11 +12,28 @@ public class TileData : ScriptableObject
     public enum TileState
     {
         NormalTile = 0,
-        EarthTile = 1,
+        GrassTile = 1,
         FireTile = 2,
         WaterTile = 3,
         GoalTile = 4,
         WallTile = 5
 
+    }
+
+    public void FireTile(GameObject go)
+    {
+        if (go.CompareTag("Player"))
+        {
+            Player.instance.moveTargetPos = go.transform.position + Vector3.down;
+
+        }
+    }
+    
+    public void GrassTile(GameObject go)
+    {
+        if (go.CompareTag("Player"))
+        {
+            Player.instance.moveTargetPos = go.transform.position + Vector3.up;
+        }
     }
 }

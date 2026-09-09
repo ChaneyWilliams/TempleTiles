@@ -98,6 +98,13 @@ public class GameManager : MonoBehaviour
     {
         switch (tileInfo.tileState)
         {
+            case TileData.TileState.FireTile:
+                tileInfo.FireTile(entered);
+                break;
+            
+            case TileData.TileState.GrassTile:
+                tileInfo.GrassTile(entered);
+                break;
             case TileData.TileState.NormalTile:
             default:
                 break;
