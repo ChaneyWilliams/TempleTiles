@@ -36,4 +36,12 @@ public class TileData : ScriptableObject
             Player.instance.moveTargetPos = go.transform.position + Vector3.up;
         }
     }
+
+    public void WaterTile(GameObject go)
+    {
+        if (go.CompareTag("Player"))
+        {
+            Player.instance.moveTargetPos = go.transform.position + Vector3.up;
+        }
+    }
 }

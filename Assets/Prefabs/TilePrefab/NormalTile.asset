@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: earthTileResized_0
+  m_Name: NormalTile
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.Tilemaps.Tile
-  m_Sprite: {fileID: -6050695943259059418, guid: 135f0ad41103fd5439fe93341360c601, type: 3}
+  m_Sprite: {fileID: -34281490362677317, guid: 962232754c5e1624d9a17ececc5a8940, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

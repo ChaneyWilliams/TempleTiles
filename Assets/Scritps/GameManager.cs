@@ -110,6 +110,9 @@ public class GameManager : MonoBehaviour
             case TileData.TileState.GrassTile:
                 tileInfo.GrassTile(entered);
                 break;
+            case TileData.TileState.WaterTile:
+                tileInfo.WaterTile(entered);
+                break;
             case TileData.TileState.NormalTile:
             default:
                 break;
@@ -166,16 +169,19 @@ public class GameManager : MonoBehaviour
                 continue;
             switch ((currentTile.tileState, neighborTile.tileState))
             {
-                case (TileData.TileState.GrassTile, TileData.TileState.WaterTile):
-                    changes[nextPos] = allTiles[2];
-                    break;
-
                 case (TileData.TileState.FireTile, TileData.TileState.GrassTile):
                     changes[nextPos] = allTiles[1];
                     break;
 
-                case (TileData.TileState.WaterTile, TileData.TileState.FireTile):
+                case (TileData.TileState.GrassTile, TileData.TileState.WaterTile):
                     changes[nextPos] = allTiles[2];
+                    break;
+
+                case (TileData.TileState.WaterTile, TileData.TileState.FireTile):
+                    changes[nextPos] = allTiles[3];
+                    break;
+                case (TileData.TileState.FireTile, TileData.TileState.NormalTile):
+                    changes[nextPos] = allTiles[1];
                     break;
             }
 
@@ -195,4 +201,5 @@ public class GameManager : MonoBehaviour
         }
         return neighbors;
     }
+
 }

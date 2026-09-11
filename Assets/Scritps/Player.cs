@@ -85,6 +85,9 @@ public class Player : MonoBehaviour
                 case TileData.TileState.GrassTile:
                     currentTile = GameManager.instance.GetTileBase(2);
                     break;
+                case TileData.TileState.WaterTile:
+                    currentTile = GameManager.instance.GetTileBase(3);
+                    break;
                 default:
                     return;
             }
