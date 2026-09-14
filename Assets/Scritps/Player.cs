@@ -22,6 +22,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        float alpha = (Mathf.Sin(Time.time * 2.0f) + 1.0f) / 2.0f;
+        Color color = new Color(1.0f, 1.0f, 1.0f, alpha);
+        GameManager.instance.SetTileColor(pickUpPos, color);
         rb.MovePosition(Vector3.MoveTowards(rb.position, moveTargetPos, speed * Time.fixedDeltaTime));
 
         if (Vector3.Distance(rb.position, moveTargetPos) < 0.01f)
@@ -40,7 +43,8 @@ public class Player : MonoBehaviour
                 return;
             Vector3 oldTargetPosition = moveTargetPos;
             Vector2 input = context.ReadValue<Vector2>();
-
+            GameManager.instance.SetTileColor(pickUpPos, new Color(1.0f, 1.0f, 1.0f, 1.0f));
+            
             if (Mathf.Abs(input.x) == 1.0f)
             {
                 moveTargetPos = transform.position + new Vector3(input.x, 0.0f, 0.0f);
@@ -73,7 +77,7 @@ public class Player : MonoBehaviour
         TileData tile = GameManager.instance.GetTileFromMap(pickUpPos);
         if (currentTile == null)
         {
-            if(tile == null)return;
+            if (tile == null) return;
             switch (tile.tileState)
             {
                 case TileData.TileState.NormalTile:

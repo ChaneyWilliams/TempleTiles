@@ -180,9 +180,6 @@ public class GameManager : MonoBehaviour
                 case (TileData.TileState.WaterTile, TileData.TileState.FireTile):
                     changes[nextPos] = allTiles[3];
                     break;
-                case (TileData.TileState.FireTile, TileData.TileState.NormalTile):
-                    changes[nextPos] = allTiles[1];
-                    break;
             }
 
         }
@@ -200,6 +197,14 @@ public class GameManager : MonoBehaviour
             neighbors.Add(start + direction);
         }
         return neighbors;
+    }
+
+
+    public void SetTileColor(Vector3 position, Color color)
+    {
+        Vector3Int gridPos = map.WorldToCell(position);
+
+        map.SetColor(gridPos, color);
     }
 
 }
