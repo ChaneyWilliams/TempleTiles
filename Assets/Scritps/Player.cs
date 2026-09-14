@@ -22,10 +22,16 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        float alpha = (Mathf.Sin(Time.time * 2.0f) + 1.0f) / 2.0f;
-        Color color = new Color(1.0f, 1.0f, 1.0f, alpha);
+        float alpha = Mathf.Lerp(0.5f, 1.0f, (Mathf.Sin(Time.time * 2.0f) + 1.0f) / 2.0f);
+
+        Color color = new Color(0.4f, 0.4f, 0.4f, alpha);
         GameManager.instance.SetTileColor(pickUpPos, color);
         rb.MovePosition(Vector3.MoveTowards(rb.position, moveTargetPos, speed * Time.fixedDeltaTime));
+
+        if(currentTile != null && GameManager.instance.GetTileFromMap(pickUpPos) == null)
+        {
+            GameManager.instance.SetPreviewTile(pickUpPos, color, currentTile);
+        }
 
         if (Vector3.Distance(rb.position, moveTargetPos) < 0.01f)
         {
@@ -37,6 +43,7 @@ public class Player : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
+        GameManager.instance.ClearPreviewMap();
         if (context.performed)
         {
             if (GameManager.instance.currentGameState != GameManager.GameState.PlayerTurn)

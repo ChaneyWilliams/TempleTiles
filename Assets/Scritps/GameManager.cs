@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<TileBase> allTiles;
     [SerializeField] private List<TileData> tileDatas;
     public Tilemap map;
+    public Tilemap previewMap;
 
     private Dictionary<TileBase, TileData> dataFromTile;
     private List<Vector3Int> specialTiles = new List<Vector3Int>();
@@ -42,6 +43,8 @@ public class GameManager : MonoBehaviour
 
         if (map == null)
             map = GameObject.FindWithTag("Tilemap")?.GetComponent<Tilemap>();
+        if(previewMap == null)
+            previewMap = GameObject.FindWithTag("PreviewMap")?.GetComponent<Tilemap>();
         dataFromTile = new Dictionary<TileBase, TileData>();
 
         foreach (TileData tileData in tileDatas)
@@ -205,6 +208,20 @@ public class GameManager : MonoBehaviour
         Vector3Int gridPos = map.WorldToCell(position);
 
         map.SetColor(gridPos, color);
+    }
+
+    public void SetPreviewTile(Vector3 position, Color color, TileBase currentTile)
+    {
+         Vector3Int cellPos = map.WorldToCell(position);
+
+        previewMap.SetTile(cellPos, currentTile);
+        previewMap.SetTileFlags(cellPos, TileFlags.None);
+        previewMap.SetColor(cellPos, color);
+    }
+
+    public void ClearPreviewMap()
+    {
+        previewMap.ClearAllTiles();
     }
 
 }
