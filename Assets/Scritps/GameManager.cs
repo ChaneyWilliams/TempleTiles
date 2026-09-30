@@ -2,21 +2,26 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [Header("TurnSystem")]
     public static GameManager instance;
     public GameState currentGameState;
-    [SerializeField] private float timeBetweenTurns = 0.25f;
+    [SerializeField] private float timeBetweenTurns = 0.1f;
 
     [Header("TileManagement")]
     [SerializeField] private List<TileBase> allTiles;
     [SerializeField] private List<TileData> tileDatas;
+    [SerializeField] private ParticleSystem fireParticles;
+    [SerializeField] private ParticleSystem waterParticles;
+    [SerializeField] private ParticleSystem grassParticles;
     public Tilemap map;
     public Tilemap previewMap;
 
     private Dictionary<TileBase, TileData> dataFromTile;
     private List<Vector3Int> specialTiles = new List<Vector3Int>();
+    private ParticleSystem particlesInstance;
 
     private readonly List<Vector3Int> directions = new List<Vector3Int>
     {
@@ -37,10 +42,13 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else { Destroy(gameObject); }
 
+    }
+
+    void Start()
+    {
         if (map == null)
             map = GameObject.FindWithTag("Tilemap")?.GetComponent<Tilemap>();
         if(previewMap == null)
@@ -55,7 +63,6 @@ public class GameManager : MonoBehaviour
                     dataFromTile.Add(tile, tileData);
             }
         }
-
     }
 
     public void ChangeGameState(GameState newGameState)
@@ -116,6 +123,9 @@ public class GameManager : MonoBehaviour
             case TileData.TileState.WaterTile:
                 tileInfo.WaterTile(entered);
                 break;
+            case TileData.TileState.GoalTile:
+                tileInfo.GoalTile(entered);
+                break;
             case TileData.TileState.NormalTile:
             default:
                 break;
@@ -174,14 +184,17 @@ public class GameManager : MonoBehaviour
             {
                 case (TileData.TileState.FireTile, TileData.TileState.GrassTile):
                     changes[nextPos] = allTiles[1];
+                    SpawnParticles(fireParticles, nextPos);
                     break;
 
                 case (TileData.TileState.GrassTile, TileData.TileState.WaterTile):
                     changes[nextPos] = allTiles[2];
+                    SpawnParticles(grassParticles, nextPos);
                     break;
 
                 case (TileData.TileState.WaterTile, TileData.TileState.FireTile):
                     changes[nextPos] = allTiles[3];
+                    SpawnParticles(waterParticles, nextPos);
                     break;
             }
 
@@ -202,6 +215,10 @@ public class GameManager : MonoBehaviour
         return neighbors;
     }
 
+    public void ResetLevel()
+    { 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
     public void SetTileColor(Vector3 position, Color color)
     {
@@ -223,5 +240,11 @@ public class GameManager : MonoBehaviour
     {
         previewMap.ClearAllTiles();
     }
+
+    void SpawnParticles(ParticleSystem particleSystem, Vector3 pos)
+    {
+        particlesInstance = Instantiate(particleSystem, pos, Quaternion.identity);
+    }
+
 
 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2685520583151014717}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -312,4 +312,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   speed: 5
+  moveTargetPos: {x: 0, y: 0, z: 0}
   pickUpPos: {x: 0, y: 0, z: 0}

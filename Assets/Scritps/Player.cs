@@ -37,6 +37,11 @@ public class Player : MonoBehaviour
         {
             rb.position = moveTargetPos;
             TileData currentTile = GameManager.instance.GetTileFromMap(gameObject.transform.position);
+            if (currentTile == null)
+            {
+                PlayerDie();
+                return;
+            }
             GameManager.instance.TileChoices(currentTile, gameObject);
         }
     }
@@ -114,5 +119,9 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void PlayerDie()
+    {
+        GameManager.instance.ResetLevel();
+    }
 
 }

@@ -23,6 +23,15 @@ MonoBehaviour:
   m_OverrideGlobalSceneList: 1
   m_Scenes:
   - m_enabled: 1
+    m_path: Assets/Scenes/Level1.unity
+    m_guid: 9b3cf711a810b2a4ba18a512c931eec4
+  - m_enabled: 1
+    m_path: Assets/Scenes/Level2.unity
+    m_guid: 50dd5042f2f5d5f48b498dc072d17ec8
+  - m_enabled: 1
+    m_path: Assets/Scenes/Level3.unity
+    m_guid: e23aa503932060848b3864e9bfb06437
+  - m_enabled: 1
     m_path: Assets/Scenes/Testing.unity
     m_guid: 2fc92f5275c1f0f49aa0eafd70f9d9ba
   m_HasScriptingDefines: 0
@@ -178,7 +187,9 @@ MonoBehaviour:
     - line: '|   visionOSBundleVersion: 1.0'
     - line: '|   tvOSBundleVersion: 1.0'
     - line: '|   bundleVersion: 1.0'
-    - line: '|   preloadedAssets: []'
+    - line: '|   preloadedAssets:'
+    - line: '|   - {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100,
+        type: 3}'
     - line: '|   metroInputSource: 0'
     - line: '|   wsaTransparentSwapchain: 0'
     - line: '|   xboxOneDisableKinectGpuReservation: 1'

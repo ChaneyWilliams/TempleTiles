@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2504100513854083991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8002772420435830702}
+  - component: {fileID: 751971025135520408}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8002772420435830702
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2504100513854083991}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.37844, y: 1.23141, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &751971025135520408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2504100513854083991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20b960631b693154eafa5f8caf4c0bd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  currentGameState: 0
+  timeBetweenTurns: 0.3
+  allTiles:
+  - {fileID: 11400000, guid: 917dc6250002d874eb19ee5aeb750be0, type: 2}
+  - {fileID: 11400000, guid: fdb6d4f4bb5263940b84c52e5d88360f, type: 2}
+  - {fileID: 11400000, guid: e971eb54b745ea5419a9f20658a39716, type: 2}
+  - {fileID: 11400000, guid: 4cf9b2126c5d7664c85c4d76234084dc, type: 2}
+  - {fileID: 11400000, guid: edcbf13bb1ac8044b985d41a88800db6, type: 2}
+  tileDatas:
+  - {fileID: 11400000, guid: f3a3e90abdc64354693b28082b139d3b, type: 2}
+  - {fileID: 11400000, guid: dfcc4ca2ed16c7245bb8381978b1315b, type: 2}
+  - {fileID: 11400000, guid: 75a120dbc0a9d794c92babea4e9d90b1, type: 2}
+  - {fileID: 11400000, guid: 59d54621ded8a654fa2f9cafaacc10f9, type: 2}
+  - {fileID: 11400000, guid: 320486a849d2eb7478c462766089213a, type: 2}
+  fireParticles: {fileID: 1677345948488936567, guid: 641c656558d8a2443b20700deb95d497, type: 3}
+  waterParticles: {fileID: 1677345948488936567, guid: 6cd8062fa8ae3d14a98beda67e5824ad, type: 3}
+  grassParticles: {fileID: 1677345948488936567, guid: 8577c9637c93ae2469ca4065ca9c14b2, type: 3}
+  map: {fileID: 0}
+  previewMap: {fileID: 0}

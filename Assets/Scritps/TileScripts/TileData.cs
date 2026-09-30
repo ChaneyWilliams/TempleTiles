@@ -24,16 +24,16 @@ public class TileData : ScriptableObject
     {
         if (go.CompareTag("Player"))
         {
-            Player.instance.moveTargetPos = go.transform.position + Vector3.down;
+            Player.instance.moveTargetPos = go.transform.position + Vector3.up * 2;
 
         }
     }
-    
+
     public void GrassTile(GameObject go)
     {
         if (go.CompareTag("Player"))
         {
-            Player.instance.moveTargetPos = go.transform.position + Vector3.up;
+            Player.instance.moveTargetPos = go.transform.position + Vector3.left * 2;
         }
     }
 
@@ -41,7 +41,21 @@ public class TileData : ScriptableObject
     {
         if (go.CompareTag("Player"))
         {
-            Player.instance.moveTargetPos = go.transform.position + Vector3.up;
+            Player.instance.moveTargetPos = go.transform.position + Vector3.right * 2;
         }
     }
+
+    public void GoalTile(GameObject go)
+    {
+        if (go.CompareTag("Player"))
+        {
+            int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+
+            if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+            {
+                SceneManager.LoadScene(nextSceneIndex);
+            }
+        }
+    }
+
 }

@@ -33,6 +33,9 @@ public class CommandPattern : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space))
             Undo();
 
+        if(Input.GetKeyDown(KeyCode.P))
+            ScoreManager.instance.addScore(5.0f);
+
     }
 
     public void Undo()
