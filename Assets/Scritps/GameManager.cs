@@ -154,7 +154,6 @@ public class GameManager : MonoBehaviour
             {
                 if (HasEnoughGrassNeighbors(pos))
                 {
-                    Debug.Log("CHANGING");
                     allChanges[pos] = allTiles[2];
                 }
 
@@ -254,6 +253,11 @@ public class GameManager : MonoBehaviour
                     changes[nextPos] = allTiles[3];
                     SpawnParticles(waterParticles, nextPos);
                     break;
+                case(TileData.TileState.WaterTile, TileData.TileState.NormalTile):
+                    changes[nextPos] = allTiles[3];
+                    SpawnParticles(waterParticles, nextPos);
+                    break;
+
             }
 
         }
@@ -286,7 +290,7 @@ public class GameManager : MonoBehaviour
             {
                 grassCount++;
 
-                if (grassCount >= 3)
+                if (grassCount >= 2)
                     return true;
             }
         }
