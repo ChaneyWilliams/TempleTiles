@@ -138,46 +138,80 @@ public class GameManager : MonoBehaviour
 
         BoundsInt bounds = map.cellBounds;
 
+        Dictionary<Vector3Int, TileBase> allChanges =
+            new Dictionary<Vector3Int, TileBase>();
+
         foreach (Vector3Int pos in bounds.allPositionsWithin)
         {
             TileData tile = GetTileFromMap(pos);
-            if (tile == null || tile.tileState == TileData.TileState.NormalTile || tile.tileState == TileData.TileState.WallTile)
+
+            if (tile == null)
+                continue;
+
+            // Normal tile becomes grass if surrounded
+            // by 3 or more grass tiles.
+            if (tile.tileState == TileData.TileState.NormalTile)
+            {
+                if (HasEnoughGrassNeighbors(pos))
+                {
+                    Debug.Log("CHANGING");
+                    allChanges[pos] = allTiles[2];
+                }
+
+                continue;
+            }
+
+            if (tile.tileState == TileData.TileState.WallTile)
                 continue;
 
             if (tile.tileState == TileData.TileState.FireTile)
             {
                 GameObject tileObject = map.GetInstantiatedObject(pos);
-                tileObject.GetComponent<FireTileTracker>().BurnOut();
+
+                if (tileObject != null)
+                {
+                    FireTileTracker tracker =
+                        tileObject.GetComponent<FireTileTracker>();
+
+                    if (tracker != null)
+                    {
+                        tracker.BurnOut();
+                    }
+                }
             }
+
             specialTiles.Add(pos);
         }
 
-        Dictionary<Vector3Int, TileBase> allChanges = new Dictionary<Vector3Int, TileBase>();
-
-        foreach (Vector3Int tile in specialTiles) //loop through all special tiles
+        // Check all special tiles for environmental changes
+        foreach (Vector3Int tile in specialTiles)
         {
-            //make a dict that has all the nighbors with the right tile type
-            //(if fire tile get earth neighbors, if earth tile get water neighbors, etc..)
-            Dictionary<Vector3Int, TileBase> changes = CheckAllNeighbors(tile);
+            Dictionary<Vector3Int, TileBase> changes =
+                CheckAllNeighbors(tile);
 
             foreach (KeyValuePair<Vector3Int, TileBase> kvp in changes)
             {
-                allChanges[kvp.Key] = kvp.Value; // pull all those tiles into a dict outside the loop
+                allChanges[kvp.Key] = kvp.Value;
             }
         }
+
+        // Apply all changes at the end
         foreach (KeyValuePair<Vector3Int, TileBase> kvp in allChanges)
         {
             map.SetTile(kvp.Key, kvp.Value);
 
             TileData newTile = GetTileFromMap(kvp.Key);
 
-            if (newTile != null && newTile.tileState == TileData.TileState.FireTile)
+            if (newTile != null &&
+                newTile.tileState == TileData.TileState.FireTile)
             {
-                GameObject tileObject = map.GetInstantiatedObject(kvp.Key);
+                GameObject tileObject =
+                    map.GetInstantiatedObject(kvp.Key);
 
                 if (tileObject != null)
                 {
-                    FireTileTracker tracker = tileObject.GetComponent<FireTileTracker>();
+                    FireTileTracker tracker =
+                        tileObject.GetComponent<FireTileTracker>();
 
                     if (tracker != null)
                     {
@@ -186,8 +220,9 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-
     }
+
+
 
     Dictionary<Vector3Int, TileBase> CheckAllNeighbors(Vector3Int position)
     {
@@ -237,6 +272,29 @@ public class GameManager : MonoBehaviour
         }
         return neighbors;
     }
+
+    bool HasEnoughGrassNeighbors(Vector3Int position)
+    {
+        int grassCount = 0;
+
+        foreach (Vector3Int neighborPos in GetNeighbors(position))
+        {
+            TileData neighborTile = GetTileFromMap(neighborPos);
+
+            if (neighborTile != null &&
+                neighborTile.tileState == TileData.TileState.GrassTile)
+            {
+                grassCount++;
+
+                if (grassCount >= 3)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+
 
     public void ResetLevel()
     {
