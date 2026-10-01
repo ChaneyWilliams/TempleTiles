@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
   m_Name: CampFire
   m_EditorClassIdentifier: Unity.2D.Tilemap.Extras::UnityEngine.Tilemaps.AnimatedTile
-  m_AnimatedSprites: []
-  m_MinSpeed: 1
-  m_MaxSpeed: 1
+  m_AnimatedSprites:
+  - {fileID: -1999951752316931609, guid: 36c2540e1ade3234ca02f8b90172b310, type: 3}
+  - {fileID: 5032540112720631033, guid: 36c2540e1ade3234ca02f8b90172b310, type: 3}
+  - {fileID: 2187595941058553269, guid: 36c2540e1ade3234ca02f8b90172b310, type: 3}
+  - {fileID: -8045036359164621903, guid: 36c2540e1ade3234ca02f8b90172b310, type: 3}
+  m_MinSpeed: 2
+  m_MaxSpeed: 2
   m_AnimationStartTime: 0
   m_AnimationStartFrame: 0
   m_TileColliderType: 0

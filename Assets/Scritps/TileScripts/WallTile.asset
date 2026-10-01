@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b23edd2c4684e1b429a4820309886507, type: 3}
+  m_Name: WallTile
+  m_EditorClassIdentifier: Assembly-CSharp::TileData
+  tiles:
+  - {fileID: 11400000, guid: ba4f3117858e1a644905fc67d8cbddce, type: 2}
+  - {fileID: 11400000, guid: 342b1799f0d5abf449d9bcefc3f6e97a, type: 2}
+  - {fileID: 11400000, guid: 62c54a53d2a6e27448e78e9e4de50c2d, type: 2}
+  - {fileID: 11400000, guid: fcac49e52bf2e3a44801df3fafb494bf, type: 2}
+  - {fileID: 11400000, guid: db01f875fd41b1c48a5770f6a42d2ec4, type: 2}
+  - {fileID: 11400000, guid: 8a975505b8a244c4e8ae4058ffa67ac2, type: 2}
+  - {fileID: 11400000, guid: 1bcb5a3ffad167d4a9a427a1cc103777, type: 2}
+  - {fileID: 11400000, guid: 7ad587e6d5764ad45a31c9b2c6c01fc6, type: 2}
+  tileState: 5

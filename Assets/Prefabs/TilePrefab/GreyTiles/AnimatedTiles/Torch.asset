@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
   m_Name: Torch
   m_EditorClassIdentifier: Unity.2D.Tilemap.Extras::UnityEngine.Tilemaps.AnimatedTile
-  m_AnimatedSprites: []
-  m_MinSpeed: 1
-  m_MaxSpeed: 1
+  m_AnimatedSprites:
+  - {fileID: 500832571, guid: 36c2540e1ade3234ca02f8b90172b310, type: 3}
+  - {fileID: 1970090347, guid: 36c2540e1ade3234ca02f8b90172b310, type: 3}
+  - {fileID: -669742605, guid: 36c2540e1ade3234ca02f8b90172b310, type: 3}
+  - {fileID: -1652503284, guid: 36c2540e1ade3234ca02f8b90172b310, type: 3}
+  m_MinSpeed: 2
+  m_MaxSpeed: 2
   m_AnimationStartTime: 0
   m_AnimationStartFrame: 0
   m_TileColliderType: 0

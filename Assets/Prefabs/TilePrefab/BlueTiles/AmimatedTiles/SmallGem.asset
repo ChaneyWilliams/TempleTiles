@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
   m_Name: SmallGem
   m_EditorClassIdentifier: Unity.2D.Tilemap.Extras::UnityEngine.Tilemaps.AnimatedTile
-  m_AnimatedSprites: []
-  m_MinSpeed: 1
-  m_MaxSpeed: 1
+  m_AnimatedSprites:
+  - {fileID: 7274784480088485407, guid: 36c2540e1ade3234ca02f8b90172b310, type: 3}
+  - {fileID: 5766364819245932445, guid: 36c2540e1ade3234ca02f8b90172b310, type: 3}
+  - {fileID: -3843935396622579123, guid: 36c2540e1ade3234ca02f8b90172b310, type: 3}
+  - {fileID: -1780554632840643265, guid: 36c2540e1ade3234ca02f8b90172b310, type: 3}
+  m_MinSpeed: 2
+  m_MaxSpeed: 2
   m_AnimationStartTime: 0
   m_AnimationStartFrame: 0
   m_TileColliderType: 0
