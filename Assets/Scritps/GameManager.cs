@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     {
         if (map == null)
             map = GameObject.FindWithTag("Tilemap")?.GetComponent<Tilemap>();
-        if(previewMap == null)
+        if (previewMap == null)
             previewMap = GameObject.FindWithTag("PreviewMap")?.GetComponent<Tilemap>();
         dataFromTile = new Dictionary<TileBase, TileData>();
 
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
 
             case GameState.LevelTurn:
                 yield return new WaitForSeconds(timeBetweenTurns);
-                
+
                 ChangeEnvironment();
 
                 yield return new WaitForSeconds(timeBetweenTurns);
@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-
+    //GET THE PREFAB THATS STORED IN THE TILEBASE
     public void TileChoices(TileData tileInfo, GameObject entered)
     {
         switch (tileInfo.tileState)
@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
             case TileData.TileState.FireTile:
                 tileInfo.FireTile(entered);
                 break;
-            
+
             case TileData.TileState.GrassTile:
                 tileInfo.GrassTile(entered);
                 break;
@@ -144,6 +144,11 @@ public class GameManager : MonoBehaviour
             if (tile == null || tile.tileState == TileData.TileState.NormalTile || tile.tileState == TileData.TileState.WallTile)
                 continue;
 
+            if (tile.tileState == TileData.TileState.FireTile)
+            {
+                GameObject tileObject = map.GetInstantiatedObject(pos);
+                tileObject.GetComponent<FireTileTracker>().BurnOut();
+            }
             specialTiles.Add(pos);
         }
 
@@ -153,7 +158,7 @@ public class GameManager : MonoBehaviour
         {
             //make a dict that has all the nighbors with the right tile type
             //(if fire tile get earth neighbors, if earth tile get water neighbors, etc..)
-            Dictionary<Vector3Int, TileBase> changes = CheckAllNeighbors(tile); 
+            Dictionary<Vector3Int, TileBase> changes = CheckAllNeighbors(tile);
 
             foreach (KeyValuePair<Vector3Int, TileBase> kvp in changes)
             {
@@ -162,8 +167,26 @@ public class GameManager : MonoBehaviour
         }
         foreach (KeyValuePair<Vector3Int, TileBase> kvp in allChanges)
         {
-            map.SetTile(kvp.Key, kvp.Value); // loop through outside dict to place new tiles without chaining new tiles (new fire tiles wont burn earth tiles etc)
+            map.SetTile(kvp.Key, kvp.Value);
+
+            TileData newTile = GetTileFromMap(kvp.Key);
+
+            if (newTile != null && newTile.tileState == TileData.TileState.FireTile)
+            {
+                GameObject tileObject = map.GetInstantiatedObject(kvp.Key);
+
+                if (tileObject != null)
+                {
+                    FireTileTracker tracker = tileObject.GetComponent<FireTileTracker>();
+
+                    if (tracker != null)
+                    {
+                        tracker.SetFireTTL(3);
+                    }
+                }
+            }
         }
+
     }
 
     Dictionary<Vector3Int, TileBase> CheckAllNeighbors(Vector3Int position)
@@ -216,7 +239,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void ResetLevel()
-    { 
+    {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -229,7 +252,7 @@ public class GameManager : MonoBehaviour
 
     public void SetPreviewTile(Vector3 position, Color color, TileBase currentTile)
     {
-         Vector3Int cellPos = map.WorldToCell(position);
+        Vector3Int cellPos = map.WorldToCell(position);
 
         previewMap.SetTile(cellPos, currentTile);
         previewMap.SetTileFlags(cellPos, TileFlags.None);
