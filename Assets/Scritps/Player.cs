@@ -24,14 +24,18 @@ public class Player : MonoBehaviour
     {
         float alpha = Mathf.Lerp(0.5f, 1.0f, (Mathf.Sin(Time.time * 2.0f) + 1.0f) / 2.0f);
 
-        Color color = new Color(0.4f, 0.4f, 0.4f, alpha);
-        GameManager.instance.SetTileColor(pickUpPos, color);
-        rb.MovePosition(Vector3.MoveTowards(rb.position, moveTargetPos, speed * Time.fixedDeltaTime));
-
-        if(currentTile != null && GameManager.instance.GetTileFromMap(pickUpPos) == null)
+        if (currentTile == null)
         {
+            Color color = new Color(0.25f, 0.25f, 0.25f, alpha);
+            GameManager.instance.SetPreviewTile(pickUpPos, color, GameManager.instance.GetTileBase(6));
+        }
+        else
+        {
+            Color color = new Color(1.0f, 1.0f, 1.0f, alpha);
             GameManager.instance.SetPreviewTile(pickUpPos, color, currentTile);
         }
+        rb.MovePosition(Vector3.MoveTowards(rb.position, moveTargetPos, speed * Time.fixedDeltaTime));
+
 
         if (Vector3.Distance(rb.position, moveTargetPos) < 0.01f)
         {
@@ -56,7 +60,7 @@ public class Player : MonoBehaviour
             Vector3 oldTargetPosition = moveTargetPos;
             Vector2 input = context.ReadValue<Vector2>();
             GameManager.instance.SetTileColor(pickUpPos, new Color(1.0f, 1.0f, 1.0f, 1.0f));
-            
+
             if (Mathf.Abs(input.x) == 1.0f)
             {
                 moveTargetPos = transform.position + new Vector3(input.x, 0.0f, 0.0f);
