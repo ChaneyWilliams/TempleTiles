@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
             Color color = new Color(0.25f, 0.25f, 0.25f, alpha);
             GameManager.instance.SetPreviewTile(pickUpPos, color, GameManager.instance.GetTileBase(6));
         }
-        else
+        else if (GameManager.instance.GetTileFromMap(pickUpPos) == null) // cursed
         {
             Color color = new Color(1.0f, 1.0f, 1.0f, alpha);
             GameManager.instance.SetPreviewTile(pickUpPos, color, currentTile);
