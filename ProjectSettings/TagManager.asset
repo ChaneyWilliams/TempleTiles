@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Tilemap
   - PreviewMap
+  - FireMap
+  - GrassMap
+  - WaterMap
   layers:
   - Default
   - TransparentFX

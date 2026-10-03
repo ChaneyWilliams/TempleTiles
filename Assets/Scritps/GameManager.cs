@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ParticleSystem grassParticles;
     public Tilemap map;
     public Tilemap previewMap;
+    public Tilemap fireMap;
+    public Tilemap grassMap;
+    public Tilemap waterMap;
 
     private Dictionary<TileBase, TileData> dataFromTile;
     private List<Vector3Int> specialTiles = new List<Vector3Int>();
@@ -53,6 +56,12 @@ public class GameManager : MonoBehaviour
             map = GameObject.FindWithTag("Tilemap")?.GetComponent<Tilemap>();
         if (previewMap == null)
             previewMap = GameObject.FindWithTag("PreviewMap")?.GetComponent<Tilemap>();
+        if (fireMap == null)
+            fireMap = GameObject.FindWithTag("FireMap")?.GetComponent<Tilemap>();
+        if (grassMap == null)
+            grassMap = GameObject.FindWithTag("GrassMap")?.GetComponent<Tilemap>();
+        if (waterMap == null)
+            waterMap = GameObject.FindWithTag("WaterMap")?.GetComponent<Tilemap>();
         dataFromTile = new Dictionary<TileBase, TileData>();
 
         foreach (TileData tileData in tileDatas)
@@ -63,6 +72,9 @@ public class GameManager : MonoBehaviour
                     dataFromTile.Add(tile, tileData);
             }
         }
+        SyncEntireSpecialMaps();
+
+
     }
 
     public void ChangeGameState(GameState newGameState)
@@ -253,7 +265,7 @@ public class GameManager : MonoBehaviour
                     changes[nextPos] = allTiles[3];
                     SpawnParticles(waterParticles, nextPos);
                     break;
-                case(TileData.TileState.WaterTile, TileData.TileState.NormalTile):
+                case (TileData.TileState.WaterTile, TileData.TileState.NormalTile):
                     changes[nextPos] = allTiles[3];
                     SpawnParticles(waterParticles, nextPos);
                     break;
@@ -329,6 +341,99 @@ public class GameManager : MonoBehaviour
     void SpawnParticles(ParticleSystem particleSystem, Vector3 pos)
     {
         particlesInstance = Instantiate(particleSystem, pos, Quaternion.identity);
+    }
+
+
+    private void OnEnable()
+    {
+        Tilemap.tilemapTileChanged += OnTilemapTileChanged;
+    }
+
+    private void OnDisable()
+    {
+        Tilemap.tilemapTileChanged -= OnTilemapTileChanged;
+    }
+
+    private void OnTilemapTileChanged(
+        Tilemap changedMap,
+        Tilemap.SyncTile[] changedTiles)
+    {
+        // Only synchronize changes made to the main map.
+        if (changedMap != map)
+            return;
+
+        foreach (Tilemap.SyncTile syncTile in changedTiles)
+        {
+            Vector3Int pos = syncTile.position;
+            TileBase tile = syncTile.tile;
+
+            SyncTileToSpecialMaps(pos, tile);
+        }
+    }
+
+    private void SyncTileToSpecialMaps(Vector3Int pos, TileBase tile)
+    {
+        // Clear this position from every special map first.
+        if (fireMap != null)
+            fireMap.SetTile(pos, null);
+
+        if (grassMap != null)
+            grassMap.SetTile(pos, null);
+
+        if (waterMap != null)
+            waterMap.SetTile(pos, null);
+
+        // Nothing to copy.
+        if (tile == null)
+            return;
+
+        if (!dataFromTile.TryGetValue(tile, out TileData tileData))
+            return;
+
+        switch (tileData.tileState)
+        {
+            case TileData.TileState.FireTile:
+                if (fireMap != null)
+                    fireMap.SetTile(pos, tile);
+                break;
+
+            case TileData.TileState.GrassTile:
+                if (grassMap != null)
+                    grassMap.SetTile(pos, tile);
+                break;
+
+            case TileData.TileState.WaterTile:
+                if (waterMap != null)
+                    waterMap.SetTile(pos, tile);
+                break;
+        }
+    }
+
+    private void SyncEntireSpecialMaps()
+    {
+        if (map == null)
+            return;
+
+        if (fireMap != null)
+            fireMap.ClearAllTiles();
+
+        if (grassMap != null)
+            grassMap.ClearAllTiles();
+
+        if (waterMap != null)
+            waterMap.ClearAllTiles();
+
+        BoundsInt bounds = map.cellBounds;
+
+        foreach (Vector3Int pos in bounds.allPositionsWithin)
+        {
+            TileBase tile = map.GetTile(pos);
+
+            if (tile == null)
+                continue;
+
+            SyncTileToSpecialMaps(pos, tile);
+        }
     }
 
 
