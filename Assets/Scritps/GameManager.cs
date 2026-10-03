@@ -152,7 +152,6 @@ public class GameManager : MonoBehaviour
 
         Dictionary<Vector3Int, TileBase> allChanges =
             new Dictionary<Vector3Int, TileBase>();
-
         foreach (Vector3Int pos in bounds.allPositionsWithin)
         {
             TileData tile = GetTileFromMap(pos);
@@ -160,39 +159,42 @@ public class GameManager : MonoBehaviour
             if (tile == null)
                 continue;
 
-            // Normal tile becomes grass if surrounded
-            // by 3 or more grass tiles.
-            if (tile.tileState == TileData.TileState.NormalTile)
+            switch (tile.tileState)
             {
-                if (HasEnoughGrassNeighbors(pos))
-                {
-                    allChanges[pos] = allTiles[2];
-                }
-
-                continue;
-            }
-
-            if (tile.tileState == TileData.TileState.WallTile)
-                continue;
-
-            if (tile.tileState == TileData.TileState.FireTile)
-            {
-                GameObject tileObject = map.GetInstantiatedObject(pos);
-
-                if (tileObject != null)
-                {
-                    FireTileTracker tracker =
-                        tileObject.GetComponent<FireTileTracker>();
-
-                    if (tracker != null)
+                case TileData.TileState.NormalTile:
+                    if (HasEnoughGrassNeighbors(pos))
                     {
-                        tracker.BurnOut();
+                        allChanges[pos] = allTiles[2];
+                        SpawnParticles(grassParticles, pos);
                     }
-                }
-            }
+                    break;
 
-            specialTiles.Add(pos);
+                case TileData.TileState.WallTile:
+                    break;
+
+                case TileData.TileState.FireTile:
+                    GameObject tileObject = map.GetInstantiatedObject(pos);
+
+                    if (tileObject != null)
+                    {
+                        FireTileTracker tracker =
+                            tileObject.GetComponent<FireTileTracker>();
+
+                        if (tracker != null)
+                        {
+                            tracker.BurnOut();
+                        }
+                    }
+
+                    specialTiles.Add(pos);
+                    break;
+
+                default:
+                    specialTiles.Add(pos);
+                    break;
+            }
         }
+
 
         // Check all special tiles for environmental changes
         foreach (Vector3Int tile in specialTiles)
