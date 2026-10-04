@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: 43efd50938bdf264fb7cec083f0e21f7, type: 3}
+        m_Texture: {fileID: 2800000, guid: d52ef69e57dd33e4086e1d429df87bfe, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -47,7 +47,7 @@ Material:
     m_Floats: []
     m_Colors:
     - White: {r: 1, g: 1, b: 1, a: 1}
-    - _GlowColor: {r: 0.048113197, g: 0, b: 0, a: 1}
+    - _GlowColor: {r: 0.18725492, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &599361468918677113

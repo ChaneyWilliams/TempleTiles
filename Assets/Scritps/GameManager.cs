@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ParticleSystem fireParticles;
     [SerializeField] private ParticleSystem waterParticles;
     [SerializeField] private ParticleSystem grassParticles;
+    [SerializeField] private TileBase fireVisualTile;
+    [SerializeField] private TileBase grassVisualTile;
+    [SerializeField] private TileBase waterVisualTile;
+
     public Tilemap map;
     public Tilemap previewMap;
     public Tilemap fireMap;
@@ -375,17 +379,11 @@ public class GameManager : MonoBehaviour
 
     private void SyncTileToSpecialMaps(Vector3Int pos, TileBase tile)
     {
-        // Clear this position from every special map first.
-        if (fireMap != null)
-            fireMap.SetTile(pos, null);
+        // Clear this position from every special map.
+        fireMap?.SetTile(pos, null);
+        grassMap?.SetTile(pos, null);
+        waterMap?.SetTile(pos, null);
 
-        if (grassMap != null)
-            grassMap.SetTile(pos, null);
-
-        if (waterMap != null)
-            waterMap.SetTile(pos, null);
-
-        // Nothing to copy.
         if (tile == null)
             return;
 
@@ -395,21 +393,19 @@ public class GameManager : MonoBehaviour
         switch (tileData.tileState)
         {
             case TileData.TileState.FireTile:
-                if (fireMap != null)
-                    fireMap.SetTile(pos, tile);
+                fireMap?.SetTile(pos, fireVisualTile);
                 break;
 
             case TileData.TileState.GrassTile:
-                if (grassMap != null)
-                    grassMap.SetTile(pos, tile);
+                grassMap?.SetTile(pos, grassVisualTile);
                 break;
 
             case TileData.TileState.WaterTile:
-                if (waterMap != null)
-                    waterMap.SetTile(pos, tile);
+                waterMap?.SetTile(pos, waterVisualTile);
                 break;
         }
     }
+
 
     private void SyncEntireSpecialMaps()
     {
