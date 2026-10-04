@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public Vector3 pickUpPos;
     Rigidbody2D rb;
     TileBase currentTile;
+    SpriteRenderer spriteRenderer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         moveTargetPos = transform.position;
         pickUpPos = gameObject.transform.position + Vector3.right;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -63,6 +65,7 @@ public class Player : MonoBehaviour
 
             if (Mathf.Abs(input.x) == 1.0f)
             {
+                spriteRenderer.flipX = input.x > 0;
                 moveTargetPos = transform.position + new Vector3(input.x, 0.0f, 0.0f);
                 pickUpPos = moveTargetPos + new Vector3(input.x, 0.0f, 0.0f);
                 TileData futureTile = GameManager.instance.GetTileFromMap(moveTargetPos);
