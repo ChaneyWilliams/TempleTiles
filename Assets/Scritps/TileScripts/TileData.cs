@@ -16,7 +16,8 @@ public class TileData : ScriptableObject
         FireTile = 2,
         WaterTile = 3,
         GoalTile = 4,
-        WallTile = 5
+        WallTile = 5,
+        UITile = 6
 
     }
 

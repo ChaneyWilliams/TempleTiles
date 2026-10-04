@@ -59,6 +59,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 59d54621ded8a654fa2f9cafaacc10f9, type: 2}
   - {fileID: 11400000, guid: 320486a849d2eb7478c462766089213a, type: 2}
   - {fileID: 11400000, guid: 0c5e670ebbb0da247ae8aa02996405c0, type: 2}
+  - {fileID: 11400000, guid: e7ef45fccc0b1cc4ab726a845bcd7926, type: 2}
   fireParticles: {fileID: 1677345948488936567, guid: 641c656558d8a2443b20700deb95d497, type: 3}
   waterParticles: {fileID: 1677345948488936567, guid: 6cd8062fa8ae3d14a98beda67e5824ad, type: 3}
   grassParticles: {fileID: 1677345948488936567, guid: 8577c9637c93ae2469ca4065ca9c14b2, type: 3}

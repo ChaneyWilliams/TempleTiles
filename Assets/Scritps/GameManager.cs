@@ -21,10 +21,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TileBase waterVisualTile;
 
     public Tilemap map;
-    public Tilemap previewMap;
-    public Tilemap fireMap;
-    public Tilemap grassMap;
-    public Tilemap waterMap;
+    private Tilemap previewMap;
+    private Tilemap fireMap;
+    private Tilemap grassMap;
+    private Tilemap waterMap;
 
     private Dictionary<TileBase, TileData> dataFromTile;
     private List<Vector3Int> specialTiles = new List<Vector3Int>();

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b23edd2c4684e1b429a4820309886507, type: 3}
+  m_Name: UITile
+  m_EditorClassIdentifier: Assembly-CSharp::TileData
+  tiles:
+  - {fileID: 11400000, guid: ca5458a354e0a1a4c83dac5dd833520f, type: 2}
+  - {fileID: 11400000, guid: 2c37217f4d3158c43bb5752c53b85f21, type: 2}
+  - {fileID: 11400000, guid: 53b0ecb59202b2e49b18dd9a15abc442, type: 2}
+  - {fileID: 11400000, guid: 5042084570c67e0409a3906f024cb557, type: 2}
+  - {fileID: 11400000, guid: f2343f4fb4c4ac6498112310f4ee6cfa, type: 2}
+  - {fileID: 11400000, guid: 5b4d6bb4efe58e54eb8d1714b22fbb2f, type: 2}
+  - {fileID: 11400000, guid: c8f753fdf024e994294fbc801e1d6868, type: 2}
+  - {fileID: 11400000, guid: 393c848e14333844ebe4b791d626302b, type: 2}
+  - {fileID: 11400000, guid: de59141690c837d42958c6a998a111e9, type: 2}
+  - {fileID: 11400000, guid: 4f704df1278581e499db854625c4f2b1, type: 2}
+  tileState: 6
