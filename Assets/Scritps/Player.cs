@@ -112,6 +112,9 @@ public class Player : MonoBehaviour
                 case TileData.TileState.WaterTile:
                     currentTile = GameManager.instance.GetTileBase(3);
                     break;
+                case TileData.TileState.UITile:
+                    currentTile = GameManager.instance.TileAtPos(pickUpPos);
+                    break;
                 default:
                     return;
             }

@@ -30,8 +30,8 @@ public class GameManager : MonoBehaviour
     private Dictionary<TileBase, TileData> dataFromTile;
     private List<Vector3Int> specialTiles = new List<Vector3Int>();
     private ParticleSystem particlesInstance;
-    private TileBase moveOnesPlace;
-    private TileBase movesTensPlace;
+    private Vector3 moveOnesPlace = new Vector3(8.5f, -6.5f, 0.0f);
+    private Vector3 movesTensPlace = new Vector3(7.5f, -6.5f, 0.0f);
 
     private readonly List<Vector3Int> directions = new List<Vector3Int>
     {
@@ -84,8 +84,6 @@ public class GameManager : MonoBehaviour
         }
         SyncEntireSpecialMaps();
 
-        moveOnesPlace = TileAtPos(new Vector3(10.5f, -6.5f, 0.0f));
-        movesTensPlace = TileAtPos(new Vector3(9.5f, -6.5f, 0.0f));
 
 
     }
@@ -95,8 +93,6 @@ public class GameManager : MonoBehaviour
         StopAllCoroutines();
         Debug.Log(newGameState);
         StartCoroutine(ChangeGameStateRoutine(newGameState));
-        int ones = moveCounter % 10;
-        int tens = (moveCounter / 10) % 10;
 
     }
 
@@ -107,7 +103,14 @@ public class GameManager : MonoBehaviour
         switch (currentGameState)
         {
             case GameState.PlayerTurn:
-                moveCounter++;
+                if (CheckUITiles())
+                {
+                    moveCounter++;
+                    int ones = moveCounter % 10;
+                    int tens = (moveCounter / 10) % 10;
+                    map.SetTile(Vector3Int.FloorToInt(moveOnesPlace), UITiles[ones]);
+                    map.SetTile(Vector3Int.FloorToInt(movesTensPlace), UITiles[tens]);
+                }
                 yield break;
 
             case GameState.LevelTurn:
@@ -136,7 +139,7 @@ public class GameManager : MonoBehaviour
         return dataFromTile[tile];
     }
 
-    TileBase TileAtPos(Vector3 pos)
+    public TileBase TileAtPos(Vector3 pos)
     {
         Vector3Int gridPos = map.WorldToCell(pos);
         return map.GetTile(gridPos);
@@ -453,5 +456,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    bool CheckUITiles()
+    {
+        Vector3Int onesPos = map.WorldToCell(moveOnesPlace);
+        Vector3Int tensPos = map.WorldToCell(movesTensPlace);
+
+        TileData onesTile = GetTileFromMap(moveOnesPlace);
+        TileData tensTile = GetTileFromMap(movesTensPlace);
+
+        if (onesTile == null || tensTile == null || onesTile.tileState != TileData.TileState.UITile || tensTile.tileState != TileData.TileState.UITile)
+        {
+            return false;
+        }
+
+        return true;
+    }
 
 }
