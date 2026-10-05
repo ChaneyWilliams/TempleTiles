@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour
             case GameState.PlayerTurn:
                 if (CheckUITiles())
                 {
+                    SynchUITiles();
                     moveCounter++;
                     int ones = moveCounter % 10;
                     int tens = (moveCounter / 10) % 10;
@@ -458,9 +459,6 @@ public class GameManager : MonoBehaviour
 
     bool CheckUITiles()
     {
-        Vector3Int onesPos = map.WorldToCell(moveOnesPlace);
-        Vector3Int tensPos = map.WorldToCell(movesTensPlace);
-
         TileData onesTile = GetTileFromMap(moveOnesPlace);
         TileData tensTile = GetTileFromMap(movesTensPlace);
 
@@ -470,6 +468,15 @@ public class GameManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    void SynchUITiles()
+    {
+        TileBase onesTile = TileAtPos(moveOnesPlace);
+        TileBase tensTile = TileAtPos(movesTensPlace);
+
+        int total = UITiles.IndexOf(tensTile) * 10 + UITiles.IndexOf(onesTile);
+        moveCounter = total;
     }
 
 }
