@@ -9,6 +9,8 @@ TagManager:
   - FireMap
   - GrassMap
   - WaterMap
+  - OnesPlace
+  - TensPlace
   layers:
   - Default
   - TransparentFX

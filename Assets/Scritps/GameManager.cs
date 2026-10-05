@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [Header("TileManagement")]
     [SerializeField] private List<TileBase> allTiles;
     [SerializeField] private List<TileData> tileDatas;
+    [SerializeField] private List<TileBase> UITiles;
     [SerializeField] private ParticleSystem fireParticles;
     [SerializeField] private ParticleSystem waterParticles;
     [SerializeField] private ParticleSystem grassParticles;
@@ -29,6 +30,8 @@ public class GameManager : MonoBehaviour
     private Dictionary<TileBase, TileData> dataFromTile;
     private List<Vector3Int> specialTiles = new List<Vector3Int>();
     private ParticleSystem particlesInstance;
+    private TileBase moveOnesPlace;
+    private TileBase movesTensPlace;
 
     private readonly List<Vector3Int> directions = new List<Vector3Int>
     {
@@ -38,11 +41,14 @@ public class GameManager : MonoBehaviour
         Vector3Int.up
     };
 
+
     public enum GameState
     {
         PlayerTurn = 0,
         LevelTurn
     }
+
+    public int moveCounter = 0;
 
     void Awake()
     {
@@ -78,6 +84,9 @@ public class GameManager : MonoBehaviour
         }
         SyncEntireSpecialMaps();
 
+        moveOnesPlace = TileAtPos(new Vector3(10.5f, -6.5f, 0.0f));
+        movesTensPlace = TileAtPos(new Vector3(9.5f, -6.5f, 0.0f));
+
 
     }
 
@@ -86,6 +95,9 @@ public class GameManager : MonoBehaviour
         StopAllCoroutines();
         Debug.Log(newGameState);
         StartCoroutine(ChangeGameStateRoutine(newGameState));
+        int ones = moveCounter % 10;
+        int tens = (moveCounter / 10) % 10;
+
     }
 
     private IEnumerator ChangeGameStateRoutine(GameState newGameState)
@@ -95,6 +107,7 @@ public class GameManager : MonoBehaviour
         switch (currentGameState)
         {
             case GameState.PlayerTurn:
+                moveCounter++;
                 yield break;
 
             case GameState.LevelTurn:
@@ -123,8 +136,12 @@ public class GameManager : MonoBehaviour
         return dataFromTile[tile];
     }
 
+    TileBase TileAtPos(Vector3 pos)
+    {
+        Vector3Int gridPos = map.WorldToCell(pos);
+        return map.GetTile(gridPos);
+    }
 
-    //GET THE PREFAB THATS STORED IN THE TILEBASE
     public void TileChoices(TileData tileInfo, GameObject entered)
     {
         switch (tileInfo.tileState)
@@ -160,7 +177,7 @@ public class GameManager : MonoBehaviour
         {
             TileData tile = GetTileFromMap(pos);
 
-            if (tile == null)
+            if (tile == null || tile.tileState == TileData.TileState.UITile)
                 continue;
 
             switch (tile.tileState)
@@ -403,6 +420,8 @@ public class GameManager : MonoBehaviour
             case TileData.TileState.WaterTile:
                 waterMap?.SetTile(pos, waterVisualTile);
                 break;
+
+
         }
     }
 

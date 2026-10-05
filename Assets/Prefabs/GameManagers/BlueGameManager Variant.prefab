@@ -24,6 +24,18 @@ PrefabInstance:
       propertyPath: 'allTiles.Array.data[6]'
       value: 
       objectReference: {fileID: 11400000, guid: 815ee29ac3e6c744a90f3be9b423fa7b, type: 2}
+    - target: {fileID: 751971025135520408, guid: ec8ab791b3e0af94087166a1a6cc28b6, type: 3}
+      propertyPath: 'allTiles.Array.data[7]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 815ee29ac3e6c744a90f3be9b423fa7b, type: 2}
+    - target: {fileID: 751971025135520408, guid: ec8ab791b3e0af94087166a1a6cc28b6, type: 3}
+      propertyPath: 'allTiles.Array.data[8]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 815ee29ac3e6c744a90f3be9b423fa7b, type: 2}
+    - target: {fileID: 751971025135520408, guid: ec8ab791b3e0af94087166a1a6cc28b6, type: 3}
+      propertyPath: 'allTiles.Array.data[9]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 815ee29ac3e6c744a90f3be9b423fa7b, type: 2}
     - target: {fileID: 2504100513854083991, guid: ec8ab791b3e0af94087166a1a6cc28b6, type: 3}
       propertyPath: m_Name
       value: BlueGameManager Variant

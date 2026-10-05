@@ -69,10 +69,10 @@ public class Player : MonoBehaviour
                 moveTargetPos = transform.position + new Vector3(input.x, 0.0f, 0.0f);
                 pickUpPos = moveTargetPos + new Vector3(input.x, 0.0f, 0.0f);
                 TileData futureTile = GameManager.instance.GetTileFromMap(moveTargetPos);
-                if (futureTile == null)
+                if (futureTile == null || futureTile.tileState == TileData.TileState.WallTile)
                 {
                     moveTargetPos = oldTargetPosition;
-                    pickUpPos = moveTargetPos + new Vector3(0.0f, input.y, 0.0f);
+                    pickUpPos = moveTargetPos + new Vector3(input.x, 0.0f, 0.0f);
                     return;
                 }
             }
@@ -80,7 +80,8 @@ public class Player : MonoBehaviour
             {
                 moveTargetPos = transform.position + new Vector3(0f, input.y, 0f);
                 pickUpPos = moveTargetPos + new Vector3(0f, input.y, 0f);
-                if (GameManager.instance.GetTileFromMap(moveTargetPos) == null || GameManager.instance.GetTileFromMap(moveTargetPos).tileState == TileData.TileState.WallTile)
+                TileData futureTile = GameManager.instance.GetTileFromMap(moveTargetPos);
+                if (futureTile == null || futureTile.tileState == TileData.TileState.WallTile)
                 {
                     moveTargetPos = oldTargetPosition;
                     pickUpPos = moveTargetPos + new Vector3(0f, input.y, 0f);

@@ -60,6 +60,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 320486a849d2eb7478c462766089213a, type: 2}
   - {fileID: 11400000, guid: 0c5e670ebbb0da247ae8aa02996405c0, type: 2}
   - {fileID: 11400000, guid: e7ef45fccc0b1cc4ab726a845bcd7926, type: 2}
+  UITiles:
+  - {fileID: 11400000, guid: 625c17d5299b5214896f1fcd6d8a3fcc, type: 2}
+  - {fileID: 11400000, guid: 0ffebc7886b97e142829c76b701245e4, type: 2}
+  - {fileID: 11400000, guid: 025105abe8e97d343b0e9b824506fd85, type: 2}
+  - {fileID: 11400000, guid: 9ce9656831174534c958b74e1df01501, type: 2}
+  - {fileID: 11400000, guid: 7f533ea790b862f488b2a64ec43d1cc9, type: 2}
+  - {fileID: 11400000, guid: a9c4efdc2833e9e48842c87903f1e434, type: 2}
+  - {fileID: 11400000, guid: 922d03514a180fc4584ac0b72d09a475, type: 2}
+  - {fileID: 11400000, guid: 5b88a6a6d5d78e74092f27b081320d4e, type: 2}
+  - {fileID: 11400000, guid: 025ba7542db21024e9bdd0d05341793c, type: 2}
+  - {fileID: 11400000, guid: 90333298f29d70940968c815c1b26779, type: 2}
   fireParticles: {fileID: 1677345948488936567, guid: 641c656558d8a2443b20700deb95d497, type: 3}
   waterParticles: {fileID: 1677345948488936567, guid: 6cd8062fa8ae3d14a98beda67e5824ad, type: 3}
   grassParticles: {fileID: 1677345948488936567, guid: 8577c9637c93ae2469ca4065ca9c14b2, type: 3}
@@ -67,7 +78,4 @@ MonoBehaviour:
   grassVisualTile: {fileID: 11400000, guid: 21d9f6cb595f9464596ecfc7a6a35e8c, type: 2}
   waterVisualTile: {fileID: 11400000, guid: 019dad75f6c4daa468794a80063b74e2, type: 2}
   map: {fileID: 0}
-  previewMap: {fileID: 0}
-  fireMap: {fileID: 0}
-  grassMap: {fileID: 0}
-  waterMap: {fileID: 0}
+  moveCounter: 0
