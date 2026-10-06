@@ -23,4 +23,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5b88a6a6d5d78e74092f27b081320d4e, type: 2}
   - {fileID: 11400000, guid: 025ba7542db21024e9bdd0d05341793c, type: 2}
   - {fileID: 11400000, guid: 90333298f29d70940968c815c1b26779, type: 2}
+  - {fileID: 11400000, guid: 56eb38b2e54b7524c8b18cb7121487a0, type: 2}
+  - {fileID: 11400000, guid: a28b1803c691148459da12e50ae2f2e3, type: 2}
+  - {fileID: 11400000, guid: 4cb396917e9d5324fa93d88f6618a58a, type: 2}
+  - {fileID: 11400000, guid: 1c65cc53bb92e3c4fb5d8367095d9fb0, type: 2}
+  - {fileID: 11400000, guid: 0bff70a5927b5e04dbb2c74a65844af4, type: 2}
+  - {fileID: 11400000, guid: 2aa7e6110145b8e49bb688ac7bc81bb9, type: 2}
   tileState: 6
