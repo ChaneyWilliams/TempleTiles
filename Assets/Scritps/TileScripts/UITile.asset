@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: UITile
   m_EditorClassIdentifier: Assembly-CSharp::TileData
   tiles:
-  - {fileID: 11400000, guid: ca5458a354e0a1a4c83dac5dd833520f, type: 2}
-  - {fileID: 11400000, guid: 2c37217f4d3158c43bb5752c53b85f21, type: 2}
-  - {fileID: 11400000, guid: 53b0ecb59202b2e49b18dd9a15abc442, type: 2}
-  - {fileID: 11400000, guid: 5042084570c67e0409a3906f024cb557, type: 2}
-  - {fileID: 11400000, guid: f2343f4fb4c4ac6498112310f4ee6cfa, type: 2}
-  - {fileID: 11400000, guid: 5b4d6bb4efe58e54eb8d1714b22fbb2f, type: 2}
-  - {fileID: 11400000, guid: c8f753fdf024e994294fbc801e1d6868, type: 2}
-  - {fileID: 11400000, guid: 393c848e14333844ebe4b791d626302b, type: 2}
-  - {fileID: 11400000, guid: de59141690c837d42958c6a998a111e9, type: 2}
-  - {fileID: 11400000, guid: 4f704df1278581e499db854625c4f2b1, type: 2}
+  - {fileID: 11400000, guid: 625c17d5299b5214896f1fcd6d8a3fcc, type: 2}
+  - {fileID: 11400000, guid: 0ffebc7886b97e142829c76b701245e4, type: 2}
+  - {fileID: 11400000, guid: 025105abe8e97d343b0e9b824506fd85, type: 2}
+  - {fileID: 11400000, guid: 9ce9656831174534c958b74e1df01501, type: 2}
+  - {fileID: 11400000, guid: 7f533ea790b862f488b2a64ec43d1cc9, type: 2}
+  - {fileID: 11400000, guid: a9c4efdc2833e9e48842c87903f1e434, type: 2}
+  - {fileID: 11400000, guid: 922d03514a180fc4584ac0b72d09a475, type: 2}
+  - {fileID: 11400000, guid: 5b88a6a6d5d78e74092f27b081320d4e, type: 2}
+  - {fileID: 11400000, guid: 025ba7542db21024e9bdd0d05341793c, type: 2}
+  - {fileID: 11400000, guid: 90333298f29d70940968c815c1b26779, type: 2}
   tileState: 6

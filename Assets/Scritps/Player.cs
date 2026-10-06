@@ -133,6 +133,7 @@ public class Player : MonoBehaviour
     private void PlayerDie()
     {
         GameManager.instance.ResetLevel();
+        LivesCounter.instance.SubLives();
     }
 
 }

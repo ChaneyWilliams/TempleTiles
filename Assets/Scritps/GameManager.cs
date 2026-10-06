@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour
     private Vector3 moveOnesPlace = new Vector3(8.5f, -6.5f, 0.0f);
     private Vector3 movesTensPlace = new Vector3(7.5f, -6.5f, 0.0f);
 
+    private Vector3 livesOnesPlace = new Vector3(0.5f, -6.5f, 0.0f);
+    private Vector3 livesTensPlace = new Vector3(-0.5f, -6.5f, 0.0f);
+
     private readonly List<Vector3Int> directions = new List<Vector3Int>
     {
         Vector3Int.left,
@@ -83,9 +86,7 @@ public class GameManager : MonoBehaviour
             }
         }
         SyncEntireSpecialMaps();
-
-
-
+        SetLivesCounterTiles();
     }
 
     public void ChangeGameState(GameState newGameState)
@@ -103,14 +104,22 @@ public class GameManager : MonoBehaviour
         switch (currentGameState)
         {
             case GameState.PlayerTurn:
-                if (CheckUITiles())
+                if (CheckMoveCounterTiles())
                 {
-                    SynchUITiles();
-                    moveCounter++;
+                    SynchMoveCounterTiles();
+                    moveCounter = (moveCounter + 1 > 99) ? moveCounter : moveCounter + 1;
                     int ones = moveCounter % 10;
                     int tens = (moveCounter / 10) % 10;
                     map.SetTile(Vector3Int.FloorToInt(moveOnesPlace), UITiles[ones]);
                     map.SetTile(Vector3Int.FloorToInt(movesTensPlace), UITiles[tens]);
+                }
+                if (CheckLivesCounterTiles())
+                {
+                    SynchLivesCounterTiles();
+                    int ones = LivesCounter.instance.GetLives() % 10;
+                    int tens = (LivesCounter.instance.GetLives() / 10) % 10;
+                    map.SetTile(Vector3Int.FloorToInt(livesOnesPlace), UITiles[ones]);
+                    map.SetTile(Vector3Int.FloorToInt(livesTensPlace), UITiles[tens]);
                 }
                 yield break;
 
@@ -457,7 +466,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    bool CheckUITiles()
+    bool CheckMoveCounterTiles()
     {
         TileData onesTile = GetTileFromMap(moveOnesPlace);
         TileData tensTile = GetTileFromMap(movesTensPlace);
@@ -470,13 +479,42 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    void SynchUITiles()
+    void SynchMoveCounterTiles()
     {
         TileBase onesTile = TileAtPos(moveOnesPlace);
         TileBase tensTile = TileAtPos(movesTensPlace);
 
         int total = UITiles.IndexOf(tensTile) * 10 + UITiles.IndexOf(onesTile);
         moveCounter = total;
+    }
+
+    bool CheckLivesCounterTiles()
+    {
+        TileData onesTile = GetTileFromMap(livesOnesPlace);
+        TileData tensTile = GetTileFromMap(livesTensPlace);
+
+        if (onesTile == null || tensTile == null || onesTile.tileState != TileData.TileState.UITile || tensTile.tileState != TileData.TileState.UITile)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    void SynchLivesCounterTiles()
+    {
+
+        TileBase onesTile = TileAtPos(livesOnesPlace);
+        TileBase tensTile = TileAtPos(livesTensPlace);
+
+        int total = UITiles.IndexOf(tensTile) * 10 + UITiles.IndexOf(onesTile);
+        LivesCounter.instance.SetLives(total);
+    }
+    void SetLivesCounterTiles()
+    {
+        int ones = LivesCounter.instance.GetLives() % 10;
+        int tens = (LivesCounter.instance.GetLives() / 10) % 10;
+        map.SetTile(Vector3Int.FloorToInt(livesOnesPlace), UITiles[ones]);
+        map.SetTile(Vector3Int.FloorToInt(livesTensPlace), UITiles[tens]);
     }
 
 }
