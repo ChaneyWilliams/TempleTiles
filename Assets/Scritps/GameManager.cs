@@ -33,8 +33,8 @@ public class GameManager : MonoBehaviour
     private Vector3 moveOnesPlace = new Vector3(8.5f, -6.5f, 0.0f);
     private Vector3 movesTensPlace = new Vector3(7.5f, -6.5f, 0.0f);
 
-    private Vector3 livesOnesPlace = new Vector3(0.5f, -6.5f, 0.0f);
-    private Vector3 livesTensPlace = new Vector3(-0.5f, -6.5f, 0.0f);
+    private Vector3 livesOnesPlace = new Vector3(-3.5f, -6.5f, 0.0f);
+    private Vector3 livesTensPlace = new Vector3(-4.5f, -6.5f, 0.0f);
 
     private readonly List<Vector3Int> directions = new List<Vector3Int>
     {
