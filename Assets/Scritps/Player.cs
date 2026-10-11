@@ -26,16 +26,11 @@ public class Player : MonoBehaviour
     {
         float alpha = Mathf.Lerp(0.5f, 1.0f, (Mathf.Sin(Time.time * 2.0f) + 1.0f) / 2.0f);
 
-        if (currentTile == null)
-        {
-            Color color = new Color(0.25f, 0.25f, 0.25f, alpha);
-            GameManager.instance.SetPreviewTile(pickUpPos, color, GameManager.instance.GetTileBase(6));
-        }
-        else if (GameManager.instance.GetTileFromMap(pickUpPos) == null) // cursed
-        {
-            Color color = new Color(1.0f, 1.0f, 1.0f, alpha);
-            GameManager.instance.SetPreviewTile(pickUpPos, color, currentTile);
-        }
+
+        Color color = new Color(0.25f, 0.25f, 0.25f, alpha);
+        GameManager.instance.SetPreviewTile(pickUpPos, color, GameManager.instance.GetTileBase(6));
+
+
         rb.MovePosition(Vector3.MoveTowards(rb.position, moveTargetPos, speed * Time.fixedDeltaTime));
 
 
@@ -130,7 +125,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void PlayerDie()
+    public void PlayerDie()
     {
         GameManager.instance.ResetLevel();
         LivesCounter.instance.SubLives();

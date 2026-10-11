@@ -36,12 +36,17 @@ public class GameManager : MonoBehaviour
     private Vector3 livesOnesPlace = new Vector3(-3.5f, -6.5f, 0.0f);
     private Vector3 livesTensPlace = new Vector3(-4.5f, -6.5f, 0.0f);
 
-    private readonly List<Vector3Int> directions = new List<Vector3Int>
+
+    private readonly List<Vector3Int> gameOfLifeDirections = new List<Vector3Int>
     {
-        Vector3Int.left,
-        Vector3Int.right,
-        Vector3Int.down,
-        Vector3Int.up
+        new Vector3Int(-1, -1, 0),
+        new Vector3Int(-1,  0, 0),
+        new Vector3Int(-1,  1, 0),
+        new Vector3Int( 0, -1, 0),
+        new Vector3Int( 0,  1, 0),
+        new Vector3Int( 1, -1, 0),
+        new Vector3Int( 1,  0, 0),
+        new Vector3Int( 1,  1, 0)
     };
 
 
@@ -184,76 +189,21 @@ public class GameManager : MonoBehaviour
 
         BoundsInt bounds = map.cellBounds;
 
-        Dictionary<Vector3Int, TileBase> allChanges =
+        // PHASE 1: Process environmental interactions first.
+        Dictionary<Vector3Int, TileBase> environmentChanges =
             new Dictionary<Vector3Int, TileBase>();
+
         foreach (Vector3Int pos in bounds.allPositionsWithin)
         {
             TileData tile = GetTileFromMap(pos);
 
-            if (tile == null || tile.tileState == TileData.TileState.UITile)
+            if (tile == null ||
+                tile.tileState == TileData.TileState.UITile)
                 continue;
 
-            switch (tile.tileState)
+            if (tile.tileState == TileData.TileState.FireTile)
             {
-                case TileData.TileState.NormalTile:
-                    if (HasEnoughGrassNeighbors(pos))
-                    {
-                        allChanges[pos] = allTiles[2];
-                        SpawnParticles(grassParticles, pos);
-                    }
-                    break;
-
-                case TileData.TileState.WallTile:
-                    break;
-
-                case TileData.TileState.FireTile:
-                    GameObject tileObject = map.GetInstantiatedObject(pos);
-
-                    if (tileObject != null)
-                    {
-                        FireTileTracker tracker =
-                            tileObject.GetComponent<FireTileTracker>();
-
-                        if (tracker != null)
-                        {
-                            tracker.BurnOut();
-                        }
-                    }
-
-                    specialTiles.Add(pos);
-                    break;
-
-                default:
-                    specialTiles.Add(pos);
-                    break;
-            }
-        }
-
-
-        // Check all special tiles for environmental changes
-        foreach (Vector3Int tile in specialTiles)
-        {
-            Dictionary<Vector3Int, TileBase> changes =
-                CheckAllNeighbors(tile);
-
-            foreach (KeyValuePair<Vector3Int, TileBase> kvp in changes)
-            {
-                allChanges[kvp.Key] = kvp.Value;
-            }
-        }
-
-        // Apply all changes at the end
-        foreach (KeyValuePair<Vector3Int, TileBase> kvp in allChanges)
-        {
-            map.SetTile(kvp.Key, kvp.Value);
-
-            TileData newTile = GetTileFromMap(kvp.Key);
-
-            if (newTile != null &&
-                newTile.tileState == TileData.TileState.FireTile)
-            {
-                GameObject tileObject =
-                    map.GetInstantiatedObject(kvp.Key);
+                GameObject tileObject = map.GetInstantiatedObject(pos);
 
                 if (tileObject != null)
                 {
@@ -261,11 +211,138 @@ public class GameManager : MonoBehaviour
                         tileObject.GetComponent<FireTileTracker>();
 
                     if (tracker != null)
-                    {
-                        tracker.SetFireTTL(3);
-                    }
+                        tracker.BurnOut();
                 }
             }
+
+            if (tile.tileState == TileData.TileState.FireTile ||
+                tile.tileState == TileData.TileState.GrassTile ||
+                tile.tileState == TileData.TileState.WaterTile)
+            {
+                specialTiles.Add(pos);
+            }
+        }
+
+        // Calculate fire, water, and grass interactions
+        // using the current board.
+        foreach (Vector3Int pos in specialTiles)
+        {
+            Dictionary<Vector3Int, TileBase> changes =
+                CheckAllNeighbors(pos);
+
+            foreach (KeyValuePair<Vector3Int, TileBase> change in changes)
+            {
+                environmentChanges[change.Key] = change.Value;
+            }
+        }
+
+        // Apply environmental changes BEFORE Game of Life.
+        foreach (KeyValuePair<Vector3Int, TileBase> change
+                 in environmentChanges)
+        {
+            map.SetTile(change.Key, change.Value);
+
+            TileData newTile = GetTileFromMap(change.Key);
+
+            if (newTile != null &&
+                newTile.tileState == TileData.TileState.GrassTile)
+            {
+                SetGrassTTL(change.Key, 3);
+            }
+
+            if (newTile != null &&
+                newTile.tileState == TileData.TileState.FireTile)
+            {
+                GameObject tileObject =
+                    map.GetInstantiatedObject(change.Key);
+
+                if (tileObject != null)
+                {
+                    FireTileTracker tracker =
+                        tileObject.GetComponent<FireTileTracker>();
+
+                    if (tracker != null)
+                        tracker.SetFireTTL(3);
+                }
+            }
+        }
+
+        // PHASE 2: Conway's Game of Life with grass TTL.
+        Dictionary<Vector3Int, TileBase> lifeChanges =
+            new Dictionary<Vector3Int, TileBase>();
+
+        // Track TTL updates separately so they are processed
+        // before any tiles are replaced.
+        List<Vector3Int> grassToAge = new List<Vector3Int>();
+        List<Vector3Int> grassToDie = new List<Vector3Int>();
+        List<Vector3Int> newGrass = new List<Vector3Int>();
+
+        foreach (Vector3Int pos in bounds.allPositionsWithin)
+        {
+            TileData tile = GetTileFromMap(pos);
+
+            if (tile == null ||
+                tile.tileState == TileData.TileState.UITile)
+                continue;
+
+            int grassCount = CountGrassNeighbors(pos);
+
+            switch (tile.tileState)
+            {
+                case TileData.TileState.NormalTile:
+                    // Birth: exactly 3 grass neighbors.
+                    if (grassCount == 3)
+                    {
+                        lifeChanges[pos] = allTiles[2];
+                        newGrass.Add(pos);
+                        SpawnParticles(grassParticles, pos);
+                    }
+                    break;
+
+                case TileData.TileState.GrassTile:
+                    // Survival: 2 or 3 neighbors.
+                    // Otherwise, lose 1 TTL.
+                    if (grassCount < 2 || grassCount > 3)
+                    {
+                        grassToAge.Add(pos);
+                    }
+                    break;
+            }
+        }
+
+        // Age grass that failed the survival rules.
+        foreach (Vector3Int pos in grassToAge)
+        {
+            GameObject tileObject = map.GetInstantiatedObject(pos);
+
+            if (tileObject == null)
+                continue;
+
+            GrassLightTracker tracker =
+                tileObject.GetComponent<GrassLightTracker>();
+
+            if (tracker == null)
+                continue;
+
+            tracker.DecrementTTL();
+
+            if (tracker.TTL <= 0)
+            {
+                lifeChanges[pos] = allTiles[0];
+                grassToDie.Add(pos);
+            }
+        }
+
+        // Apply all calculated Game of Life changes.
+        foreach (KeyValuePair<Vector3Int, TileBase> change in lifeChanges)
+        {
+            map.SetTile(change.Key, change.Value);
+        }
+
+        // Initialize TTL for newly spawned grass.
+        foreach (Vector3Int pos in newGrass)
+        {
+            SetGrassTTL(pos, 3);
         }
     }
 
@@ -318,14 +395,14 @@ public class GameManager : MonoBehaviour
     List<Vector3Int> GetNeighbors(Vector3Int start)
     {
         List<Vector3Int> neighbors = new List<Vector3Int>();
-        foreach (Vector3Int direction in directions)
+        foreach (Vector3Int direction in gameOfLifeDirections)
         {
             neighbors.Add(start + direction);
         }
         return neighbors;
     }
 
-    bool HasEnoughGrassNeighbors(Vector3Int position)
+    int CountGrassNeighbors(Vector3Int position)
     {
         int grassCount = 0;
 
@@ -337,13 +414,17 @@ public class GameManager : MonoBehaviour
                 neighborTile.tileState == TileData.TileState.GrassTile)
             {
                 grassCount++;
-
-                if (grassCount >= 2)
-                    return true;
             }
         }
 
-        return false;
+        return grassCount;
+    }
+
+    bool ShouldGrassSurvive(Vector3Int position)
+    {
+        int grassCount = CountGrassNeighbors(position);
+
+        return grassCount == 2 || grassCount == 3;
     }
 
 
@@ -515,6 +596,20 @@ public class GameManager : MonoBehaviour
         int tens = (LivesCounter.instance.GetLives() / 10) % 10;
         map.SetTile(Vector3Int.FloorToInt(livesOnesPlace), UITiles[ones]);
         map.SetTile(Vector3Int.FloorToInt(livesTensPlace), UITiles[tens]);
+    }
+
+    private void SetGrassTTL(Vector3Int pos, int ttl)
+    {
+        GameObject tileObject = map.GetInstantiatedObject(pos);
+
+        if (tileObject == null)
+            return;
+
+        GrassLightTracker tracker =
+            tileObject.GetComponent<GrassLightTracker>();
+
+        if (tracker != null)
+            tracker.SetGrassTTL(ttl);
     }
 
 }

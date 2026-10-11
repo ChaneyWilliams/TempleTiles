@@ -25,7 +25,7 @@ public class TileData : ScriptableObject
     {
         if (go.CompareTag("Player"))
         {
-            Player.instance.moveTargetPos = go.transform.position + Vector3.up * 2;
+            Player.instance.PlayerDie();
 
         }
     }
@@ -34,7 +34,7 @@ public class TileData : ScriptableObject
     {
         if (go.CompareTag("Player"))
         {
-            Player.instance.moveTargetPos = go.transform.position + Vector3.left * 2;
+            Player.instance.PlayerDie();
         }
     }
 
@@ -42,7 +42,7 @@ public class TileData : ScriptableObject
     {
         if (go.CompareTag("Player"))
         {
-            Player.instance.moveTargetPos = go.transform.position + Vector3.right * 2;
+            Player.instance.PlayerDie();
         }
     }
 
