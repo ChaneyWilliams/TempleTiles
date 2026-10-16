@@ -74,12 +74,6 @@ public class GameManager : MonoBehaviour
             map = GameObject.FindWithTag("Tilemap")?.GetComponent<Tilemap>();
         if (previewMap == null)
             previewMap = GameObject.FindWithTag("PreviewMap")?.GetComponent<Tilemap>();
-        if (fireMap == null)
-            fireMap = GameObject.FindWithTag("FireMap")?.GetComponent<Tilemap>();
-        if (grassMap == null)
-            grassMap = GameObject.FindWithTag("GrassMap")?.GetComponent<Tilemap>();
-        if (waterMap == null)
-            waterMap = GameObject.FindWithTag("WaterMap")?.GetComponent<Tilemap>();
         dataFromTile = new Dictionary<TileBase, TileData>();
 
         foreach (TileData tileData in tileDatas)
@@ -90,7 +84,7 @@ public class GameManager : MonoBehaviour
                     dataFromTile.Add(tile, tileData);
             }
         }
-        SyncEntireSpecialMaps();
+        //SyncEntireSpecialMaps();
         SetLivesCounterTiles();
     }
 
@@ -463,12 +457,12 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Tilemap.tilemapTileChanged += OnTilemapTileChanged;
+        //Tilemap.tilemapTileChanged += OnTilemapTileChanged;
     }
 
     private void OnDisable()
     {
-        Tilemap.tilemapTileChanged -= OnTilemapTileChanged;
+        //Tilemap.tilemapTileChanged -= OnTilemapTileChanged;
     }
 
     private void OnTilemapTileChanged(
