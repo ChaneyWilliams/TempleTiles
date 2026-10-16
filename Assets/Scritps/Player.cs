@@ -28,7 +28,14 @@ public class Player : MonoBehaviour
 
 
         Color color = new Color(0.25f, 0.25f, 0.25f, alpha);
-        GameManager.instance.SetPreviewTile(pickUpPos, color, GameManager.instance.GetTileBase(6));
+        if (currentTile == null)
+        {
+            GameManager.instance.SetPreviewTile(pickUpPos, color, GameManager.instance.GetTileBase(6));
+        }
+        else
+        {
+            GameManager.instance.SetPreviewTile(pickUpPos, color, currentTile);
+        }
 
 
         rb.MovePosition(Vector3.MoveTowards(rb.position, moveTargetPos, speed * Time.fixedDeltaTime));
