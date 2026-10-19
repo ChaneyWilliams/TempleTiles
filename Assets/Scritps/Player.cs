@@ -8,9 +8,11 @@ public class Player : MonoBehaviour
     [SerializeField] private float speed = 5.0f;
     public Vector3 moveTargetPos;
     public Vector3 pickUpPos;
+    public GameObject pauseMenu;
     Rigidbody2D rb;
     TileBase currentTile;
     SpriteRenderer spriteRenderer;
+    bool paused = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -131,6 +133,16 @@ public class Player : MonoBehaviour
             }
         }
     }
+    public void Pause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            paused = !paused;
+            pauseMenu.SetActive(paused);
+            
+        }
+    }
+
 
     public void PlayerDie()
     {
