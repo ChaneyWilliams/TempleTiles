@@ -139,6 +139,7 @@ public class Player : MonoBehaviour
         {
             paused = !paused;
             pauseMenu.SetActive(paused);
+            LivesCounter.instance.SaveProgress();
             
         }
     }

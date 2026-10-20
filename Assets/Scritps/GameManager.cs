@@ -17,15 +17,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ParticleSystem fireParticles;
     [SerializeField] private ParticleSystem waterParticles;
     [SerializeField] private ParticleSystem grassParticles;
-    [SerializeField] private TileBase fireVisualTile;
-    [SerializeField] private TileBase grassVisualTile;
-    [SerializeField] private TileBase waterVisualTile;
 
     public Tilemap map;
     private Tilemap previewMap;
-    private Tilemap fireMap;
-    private Tilemap grassMap;
-    private Tilemap waterMap;
 
     private Dictionary<TileBase, TileData> dataFromTile;
     private List<Vector3Int> specialTiles = new List<Vector3Int>();
@@ -465,81 +459,7 @@ public class GameManager : MonoBehaviour
         //Tilemap.tilemapTileChanged -= OnTilemapTileChanged;
     }
 
-    private void OnTilemapTileChanged(
-        Tilemap changedMap,
-        Tilemap.SyncTile[] changedTiles)
-    {
-        // Only synchronize changes made to the main map.
-        if (changedMap != map)
-            return;
 
-        foreach (Tilemap.SyncTile syncTile in changedTiles)
-        {
-            Vector3Int pos = syncTile.position;
-            TileBase tile = syncTile.tile;
-
-            SyncTileToSpecialMaps(pos, tile);
-        }
-    }
-
-    private void SyncTileToSpecialMaps(Vector3Int pos, TileBase tile)
-    {
-        // Clear this position from every special map.
-        fireMap?.SetTile(pos, null);
-        grassMap?.SetTile(pos, null);
-        waterMap?.SetTile(pos, null);
-
-        if (tile == null)
-            return;
-
-        if (!dataFromTile.TryGetValue(tile, out TileData tileData))
-            return;
-
-        switch (tileData.tileState)
-        {
-            case TileData.TileState.FireTile:
-                fireMap?.SetTile(pos, fireVisualTile);
-                break;
-
-            case TileData.TileState.GrassTile:
-                grassMap?.SetTile(pos, grassVisualTile);
-                break;
-
-            case TileData.TileState.WaterTile:
-                waterMap?.SetTile(pos, waterVisualTile);
-                break;
-
-
-        }
-    }
-
-
-    private void SyncEntireSpecialMaps()
-    {
-        if (map == null)
-            return;
-
-        if (fireMap != null)
-            fireMap.ClearAllTiles();
-
-        if (grassMap != null)
-            grassMap.ClearAllTiles();
-
-        if (waterMap != null)
-            waterMap.ClearAllTiles();
-
-        BoundsInt bounds = map.cellBounds;
-
-        foreach (Vector3Int pos in bounds.allPositionsWithin)
-        {
-            TileBase tile = map.GetTile(pos);
-
-            if (tile == null)
-                continue;
-
-            SyncTileToSpecialMaps(pos, tile);
-        }
-    }
 
     bool CheckMoveCounterTiles()
     {
