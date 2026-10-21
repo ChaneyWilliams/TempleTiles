@@ -1,7 +1,10 @@
 using UnityEngine;
+using System.Collections;
 
 public class MainMenu : MonoBehaviour
 {
+    bool nextTurn = true;
+    public float timeBetweenTurns = 1.0f;
     public GameObject continueButton;
     void Start()
     {
@@ -9,6 +12,13 @@ public class MainMenu : MonoBehaviour
         {
             continueButton.GetComponent<UnityEngine.UI.Button>().interactable = false;
         }
+    }
+    void Update()
+    {
+        /*if (nextTurn)
+        {
+            StartCoroutine(TitleScreenAnimation());
+        }*/
     }
     public void StartGame()
     {
@@ -28,5 +38,14 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    IEnumerator TitleScreenAnimation()
+    {
+        nextTurn = false;
+        GameManager.instance.ChangeGameState(GameManager.GameState.LevelTurn);
+        yield return new WaitForSeconds(timeBetweenTurns);
+        nextTurn = true;
+        
     }
 }
