@@ -35,8 +35,8 @@ MonoBehaviour:
     m_path: Assets/Scenes/Level3.unity
     m_guid: e23aa503932060848b3864e9bfb06437
   - m_enabled: 1
-    m_path: Assets/Scenes/Testing.unity
-    m_guid: 2fc92f5275c1f0f49aa0eafd70f9d9ba
+    m_path: Assets/Scenes/WinScene.unity
+    m_guid: afe19056c7f06914295f869559727e6f
   m_HasScriptingDefines: 0
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:

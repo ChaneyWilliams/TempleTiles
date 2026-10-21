@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
     {
         if (LivesCounter.instance.GetLives() <= 0 || LivesCounter.instance.currentLevelIndex == 0)
         {
-            continueButton.SetActive(false);
+            continueButton.GetComponent<UnityEngine.UI.Button>().interactable = false;
         }
     }
     public void StartGame()
@@ -16,7 +16,6 @@ public class MainMenu : MonoBehaviour
         LivesCounter.instance.SetLives(3);
         LivesCounter.instance.SetCurrentLevelIndex(0);
 
-        // Load the first level (assuming it's at index 0)
         UnityEngine.SceneManagement.SceneManager.LoadScene(1); // Change 1 to your first level's build index
     }
     public void LoadGame()

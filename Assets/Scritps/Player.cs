@@ -29,13 +29,14 @@ public class Player : MonoBehaviour
         float alpha = Mathf.Lerp(0.5f, 1.0f, (Mathf.Sin(Time.time * 2.0f) + 1.0f) / 2.0f);
 
 
-        Color color = new Color(0.25f, 0.25f, 0.25f, alpha);
-        if (currentTile == null)
+        if (currentTile == null && GameManager.instance.GetTileFromMap(pickUpPos) != null)
         {
+            Color color = new Color(0.25f, 0.25f, 0.25f, alpha);
             GameManager.instance.SetPreviewTile(pickUpPos, color, GameManager.instance.GetTileBase(6));
         }
-        else
+        else if(currentTile != null && GameManager.instance.GetTileFromMap(pickUpPos) == null)
         {
+            Color color = new Color(0.75f, 0.75f, 0.75f, alpha);
             GameManager.instance.SetPreviewTile(pickUpPos, color, currentTile);
         }
 
@@ -142,6 +143,21 @@ public class Player : MonoBehaviour
             LivesCounter.instance.SaveProgress();
             
         }
+    }
+    public void ResumeGame()
+    {
+        paused = false;
+        pauseMenu.SetActive(paused);
+    }
+    public void MainMenu()
+    {
+        LivesCounter.instance.SaveProgress();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
+    public void QuitGame()
+    {
+        LivesCounter.instance.SaveProgress();
+        Application.Quit();
     }
 
 

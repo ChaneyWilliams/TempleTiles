@@ -7,9 +7,11 @@ public class LivesCounter : MonoBehaviour
 
     public int lives = 3;
     public int currentLevelIndex = 0;
+    public float globalVolume = 1.0f;
 
     private const string LivesKey = "SavedLives";
     private const string LevelKey = "SavedLevelIndex";
+    private const string GlobalVolumeKey = "GlobalVolume";
 
     void Awake()
     {
@@ -25,6 +27,7 @@ public class LivesCounter : MonoBehaviour
         // Load saved values, using defaults for a new game.
         lives = PlayerPrefs.GetInt(LivesKey, 3);
         currentLevelIndex = PlayerPrefs.GetInt(LevelKey, 0);
+        globalVolume = PlayerPrefs.GetFloat(GlobalVolumeKey, 1.0f);
     }
 
     public void SetLives(int newLives)
@@ -39,6 +42,10 @@ public class LivesCounter : MonoBehaviour
     public void SubLives()
     {
         lives = Mathf.Max(0, lives - 1);
+        if (lives == 0)
+        {
+            SceneManager.LoadScene(0); 
+        }
         SaveProgress();
     }
 
@@ -47,11 +54,17 @@ public class LivesCounter : MonoBehaviour
         return lives;
     }
 
+    public void SetGlobalVolume(float newVolume)
+    {
+        globalVolume = Mathf.Clamp01(newVolume);
+        PlayerPrefs.SetFloat(GlobalVolumeKey, globalVolume);
+        PlayerPrefs.Save();
+    }
+
     public void SaveProgress()
     {
         PlayerPrefs.SetInt(LivesKey, lives);
         PlayerPrefs.SetInt(LevelKey, SceneManager.GetActiveScene().buildIndex);
-        Debug.Log("AccelerationEvent: " + lives + " lives saved at level index: " + currentLevelIndex);
         PlayerPrefs.Save();
     }
 
