@@ -152,7 +152,7 @@ public class Player : MonoBehaviour
     public void MainMenu()
     {
         LivesCounter.instance.SaveProgress();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        GameManager.instance.LoadLevel(transform.position, 0);
     }
     public void QuitGame()
     {

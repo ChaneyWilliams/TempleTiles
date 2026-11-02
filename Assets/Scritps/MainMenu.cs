@@ -25,13 +25,13 @@ public class MainMenu : MonoBehaviour
         LivesCounter.instance.SetLives(3);
         LivesCounter.instance.SetCurrentLevelIndex(0);
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene(1); // Change 1 to your first level's build index
+        GameManager.instance.LoadLevel(GameManager.instance.transform.position, 1); // Change 1 to your first level's build index
     }
     public void LoadGame()
     {
         // Load the saved level index
         int savedLevelIndex = LivesCounter.instance.currentLevelIndex;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(savedLevelIndex);
+        GameManager.instance.LoadLevel(GameManager.instance.transform.position, savedLevelIndex);
     }
 
     public void QuitGame()

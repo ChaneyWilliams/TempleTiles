@@ -54,7 +54,7 @@ public class TileData : ScriptableObject
 
             if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
             {
-                SceneManager.LoadScene(nextSceneIndex);
+                GameManager.instance.LoadLevel(go.transform.position, nextSceneIndex);
             }
         }
     }

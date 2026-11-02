@@ -526,4 +526,20 @@ public class GameManager : MonoBehaviour
             tracker.SetGrassTTL(ttl);
     }
 
+    private IEnumerator LevelTransition(Vector3 pos, int index)
+    {
+        GameObject cam = Camera.main.gameObject;
+        cam.transform.position = new Vector3(pos.x, pos.y, -10.0f);
+        Animator animator = cam.GetComponent<Animator>();
+        animator.SetTrigger("NewScene");
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length - 0.1f);
+        Debug.Log("NETX");
+        SceneManager.LoadScene(index);
+
+    }
+    public void LoadLevel(Vector3 pos, int index)
+    {
+        StartCoroutine(LevelTransition(pos, index));
+    }
+
 }
