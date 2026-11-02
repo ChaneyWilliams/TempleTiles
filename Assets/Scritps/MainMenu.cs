@@ -3,7 +3,6 @@ using System.Collections;
 
 public class MainMenu : MonoBehaviour
 {
-    bool nextTurn = true;
     public float timeBetweenTurns = 1.0f;
     public GameObject continueButton;
     void Start()
@@ -42,10 +41,10 @@ public class MainMenu : MonoBehaviour
 
     IEnumerator TitleScreenAnimation()
     {
-        nextTurn = false;
+       // nextTurn = false;
         GameManager.instance.ChangeGameState(GameManager.GameState.LevelTurn);
         yield return new WaitForSeconds(timeBetweenTurns);
-        nextTurn = true;
+        //nextTurn = true;
         
     }
 }

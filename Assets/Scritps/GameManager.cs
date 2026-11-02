@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public GameState currentGameState;
     [SerializeField] private float timeBetweenTurns = 0.1f;
-
+    [SerializeField] private int fireLife = 2;
     [Header("TileManagement")]
     [SerializeField] private List<TileBase> allTiles;
     [SerializeField] private List<TileData> tileDatas;
@@ -250,7 +250,7 @@ public class GameManager : MonoBehaviour
                         tileObject.GetComponent<FireTileTracker>();
 
                     if (tracker != null)
-                        tracker.SetFireTTL(3);
+                        tracker.SetFireTTL(fireLife);
                 }
             }
         }

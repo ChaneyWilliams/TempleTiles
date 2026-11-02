@@ -8,10 +8,16 @@ public class LivesCounter : MonoBehaviour
     public int lives = 3;
     public int currentLevelIndex = 0;
     public float globalVolume = 1.0f;
+    public float red = 0.0f;
+    public float green = 0.0f;
+    public float blue = 0.0f;
 
     private const string LivesKey = "SavedLives";
     private const string LevelKey = "SavedLevelIndex";
     private const string GlobalVolumeKey = "GlobalVolume";
+    private const string RedKey = "RedTint";
+    private const string GreenKey = "GreenTint";
+    private const string BlueKey = "BlueTint";
 
     void Awake()
     {
@@ -28,6 +34,10 @@ public class LivesCounter : MonoBehaviour
         lives = PlayerPrefs.GetInt(LivesKey, 3);
         currentLevelIndex = PlayerPrefs.GetInt(LevelKey, 0);
         globalVolume = PlayerPrefs.GetFloat(GlobalVolumeKey, 1.0f);
+        red = PlayerPrefs.GetFloat(RedKey, 0.0f);
+        green = PlayerPrefs.GetFloat(GreenKey, 0.0f);
+        blue = PlayerPrefs.GetFloat(BlueKey, 0.0f);
+
     }
 
     public void SetLives(int newLives)
@@ -58,6 +68,17 @@ public class LivesCounter : MonoBehaviour
     {
         globalVolume = Mathf.Clamp01(newVolume);
         PlayerPrefs.SetFloat(GlobalVolumeKey, globalVolume);
+        PlayerPrefs.Save();
+    }
+    public void SetGlobalTint(Color color)
+    {
+        red = color.r;
+        green = color.g;
+        blue = color.b;
+        Debug.Log($"Saving: {red}, {green}, {blue}");
+        PlayerPrefs.SetFloat(RedKey, red);
+        PlayerPrefs.SetFloat(GreenKey, green);
+        PlayerPrefs.SetFloat(BlueKey, blue);
         PlayerPrefs.Save();
     }
 
