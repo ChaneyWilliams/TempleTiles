@@ -167,6 +167,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6634116797777618273, guid: bd4d146f678becb48b782d0a41df61bc, type: 3}
+      propertyPath: levelTitle
+      value: Tiles affect Tiles
+      objectReference: {fileID: 0}
     - target: {fileID: 8412387222687267950, guid: bd4d146f678becb48b782d0a41df61bc, type: 3}
       propertyPath: m_Name
       value: BlueGameManager Variant

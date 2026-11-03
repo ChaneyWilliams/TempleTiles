@@ -17,6 +17,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: da50624ada8bc78438d8b1bfbf81ec31, type: 2}
     - target: {fileID: 751971025135520408, guid: ec8ab791b3e0af94087166a1a6cc28b6, type: 3}
+      propertyPath: 'allTiles.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 342b1799f0d5abf449d9bcefc3f6e97a, type: 2}
+    - target: {fileID: 751971025135520408, guid: ec8ab791b3e0af94087166a1a6cc28b6, type: 3}
       propertyPath: 'allTiles.Array.data[5]'
       value: 
       objectReference: {fileID: 11400000, guid: ab92d6c4b02bc2946b73c2bc61598c09, type: 2}

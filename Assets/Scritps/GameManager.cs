@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
+    public string levelTitle = "";
     [Header("TurnSystem")]
     public static GameManager instance;
     public GameState currentGameState;
@@ -13,13 +14,15 @@ public class GameManager : MonoBehaviour
     [Header("TileManagement")]
     [SerializeField] private List<TileBase> allTiles;
     [SerializeField] private List<TileData> tileDatas;
-    [SerializeField] private List<TileBase> UITiles;
+    [SerializeField] private List<TileBase> numberTiles;
+    [SerializeField] private List<TileBase> letterTiles;
     [SerializeField] private ParticleSystem fireParticles;
     [SerializeField] private ParticleSystem waterParticles;
     [SerializeField] private ParticleSystem grassParticles;
 
     public Tilemap map;
     private Tilemap previewMap;
+    private Transform topRowStart;
 
     private Dictionary<TileBase, TileData> dataFromTile;
     private List<Vector3Int> specialTiles = new List<Vector3Int>();
@@ -68,6 +71,8 @@ public class GameManager : MonoBehaviour
             map = GameObject.FindWithTag("Tilemap")?.GetComponent<Tilemap>();
         if (previewMap == null)
             previewMap = GameObject.FindWithTag("PreviewMap")?.GetComponent<Tilemap>();
+        if(topRowStart == null)
+            topRowStart = GameObject.FindGameObjectWithTag("TopRow")?.GetComponent<Transform>();
         dataFromTile = new Dictionary<TileBase, TileData>();
 
         foreach (TileData tileData in tileDatas)
@@ -78,8 +83,10 @@ public class GameManager : MonoBehaviour
                     dataFromTile.Add(tile, tileData);
             }
         }
+        
         //SyncEntireSpecialMaps();
         SetLivesCounterTiles();
+        SpellLevelTitle();
     }
 
     public void ChangeGameState(GameState newGameState)
@@ -103,16 +110,16 @@ public class GameManager : MonoBehaviour
                     moveCounter = (moveCounter + 1 > 99) ? moveCounter : moveCounter + 1;
                     int ones = moveCounter % 10;
                     int tens = (moveCounter / 10) % 10;
-                    map.SetTile(Vector3Int.FloorToInt(moveOnesPlace), UITiles[ones]);
-                    map.SetTile(Vector3Int.FloorToInt(movesTensPlace), UITiles[tens]);
+                    map.SetTile(Vector3Int.FloorToInt(moveOnesPlace), numberTiles[ones]);
+                    map.SetTile(Vector3Int.FloorToInt(movesTensPlace), numberTiles[tens]);
                 }
                 if (CheckLivesCounterTiles())
                 {
                     SynchLivesCounterTiles();
                     int ones = LivesCounter.instance.GetLives() % 10;
                     int tens = (LivesCounter.instance.GetLives() / 10) % 10;
-                    map.SetTile(Vector3Int.FloorToInt(livesOnesPlace), UITiles[ones]);
-                    map.SetTile(Vector3Int.FloorToInt(livesTensPlace), UITiles[tens]);
+                    map.SetTile(Vector3Int.FloorToInt(livesOnesPlace), numberTiles[ones]);
+                    map.SetTile(Vector3Int.FloorToInt(livesTensPlace), numberTiles[tens]);
                 }
                 yield break;
 
@@ -479,7 +486,7 @@ public class GameManager : MonoBehaviour
         TileBase onesTile = TileAtPos(moveOnesPlace);
         TileBase tensTile = TileAtPos(movesTensPlace);
 
-        int total = UITiles.IndexOf(tensTile) * 10 + UITiles.IndexOf(onesTile);
+        int total = numberTiles.IndexOf(tensTile) * 10 + numberTiles.IndexOf(onesTile);
         moveCounter = total;
     }
 
@@ -501,15 +508,15 @@ public class GameManager : MonoBehaviour
         TileBase onesTile = TileAtPos(livesOnesPlace);
         TileBase tensTile = TileAtPos(livesTensPlace);
 
-        int total = UITiles.IndexOf(tensTile) * 10 + UITiles.IndexOf(onesTile);
+        int total = numberTiles.IndexOf(tensTile) * 10 + numberTiles.IndexOf(onesTile);
         LivesCounter.instance.SetLives(total);
     }
     void SetLivesCounterTiles()
     {
         int ones = LivesCounter.instance.GetLives() % 10;
         int tens = (LivesCounter.instance.GetLives() / 10) % 10;
-        map.SetTile(Vector3Int.FloorToInt(livesOnesPlace), UITiles[ones]);
-        map.SetTile(Vector3Int.FloorToInt(livesTensPlace), UITiles[tens]);
+        map.SetTile(Vector3Int.FloorToInt(livesOnesPlace), numberTiles[ones]);
+        map.SetTile(Vector3Int.FloorToInt(livesTensPlace), numberTiles[tens]);
     }
 
     private void SetGrassTTL(Vector3Int pos, int ttl)
@@ -540,6 +547,31 @@ public class GameManager : MonoBehaviour
     public void LoadLevel(Vector3 pos, int index)
     {
         StartCoroutine(LevelTransition(pos, index));
+    }
+    private void SpellLevelTitle()
+    {
+        Vector3Int startPosition = map.WorldToCell(topRowStart.position);
+
+        for (int i = 0; i < levelTitle.Length; i++)
+        {
+            char character = char.ToUpper(levelTitle[i]);
+
+            // Skip spaces but leave an empty tile position
+            if (character == ' ')
+                continue;
+
+            // Convert A-Z to indices 0-25
+            int index = character - 'A';
+
+            // Skip invalid characters
+            if (index < 0 || index >= letterTiles.Count)
+                continue;
+
+            // Place the letter tile
+            Vector3Int position = startPosition + new Vector3Int(i, 0, 0);
+
+            map.SetTile(position, letterTiles[index]);
+        }
     }
 
 }

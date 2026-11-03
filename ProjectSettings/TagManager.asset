@@ -11,6 +11,7 @@ TagManager:
   - WaterMap
   - OnesPlace
   - TensPlace
+  - TopRow
   layers:
   - Default
   - TransparentFX

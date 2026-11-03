@@ -44,8 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20b960631b693154eafa5f8caf4c0bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  levelTitle: 
   currentGameState: 0
   timeBetweenTurns: 0.1
+  fireLife: 2
+  topRowStart: {fileID: 0}
   allTiles:
   - {fileID: 11400000, guid: 917dc6250002d874eb19ee5aeb750be0, type: 2}
   - {fileID: 11400000, guid: fdb6d4f4bb5263940b84c52e5d88360f, type: 2}
@@ -60,7 +63,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 320486a849d2eb7478c462766089213a, type: 2}
   - {fileID: 11400000, guid: 0c5e670ebbb0da247ae8aa02996405c0, type: 2}
   - {fileID: 11400000, guid: e7ef45fccc0b1cc4ab726a845bcd7926, type: 2}
-  UITiles:
+  numberTiles:
   - {fileID: 11400000, guid: 625c17d5299b5214896f1fcd6d8a3fcc, type: 2}
   - {fileID: 11400000, guid: 0ffebc7886b97e142829c76b701245e4, type: 2}
   - {fileID: 11400000, guid: 025105abe8e97d343b0e9b824506fd85, type: 2}
@@ -71,6 +74,33 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5b88a6a6d5d78e74092f27b081320d4e, type: 2}
   - {fileID: 11400000, guid: 025ba7542db21024e9bdd0d05341793c, type: 2}
   - {fileID: 11400000, guid: 90333298f29d70940968c815c1b26779, type: 2}
+  letterTiles:
+  - {fileID: 11400000, guid: e31c864a404b6cf4e8452bfda2a05513, type: 2}
+  - {fileID: 11400000, guid: 7f464f3033a820f44814e58e2e08afa7, type: 2}
+  - {fileID: 11400000, guid: 7a9a7e7c0f0e01d4e99cb648792bb728, type: 2}
+  - {fileID: 11400000, guid: 0601f65a8ae136b4193d8a9b2d3d6387, type: 2}
+  - {fileID: 11400000, guid: e8dbbee7aa9cc294185e58ac9f32bbbb, type: 2}
+  - {fileID: 11400000, guid: 64ea340ed8d926049a5dc0f81e1fced1, type: 2}
+  - {fileID: 11400000, guid: 84191ecbfbe64c143aade547dcb732de, type: 2}
+  - {fileID: 11400000, guid: c248ffc89b6a14f47ae312cd7f7fca77, type: 2}
+  - {fileID: 11400000, guid: 397fd2688e5fc8142a7c89fa1d1b628c, type: 2}
+  - {fileID: 11400000, guid: 808b9047e84e0f74b93afe809d326864, type: 2}
+  - {fileID: 11400000, guid: 96cbde2d4e00e1b449090717bb2de7e9, type: 2}
+  - {fileID: 11400000, guid: 099adb9c4e7fc29449ae369c2cfc4c39, type: 2}
+  - {fileID: 11400000, guid: e1128c954c2f1734c8c80db5eead05a0, type: 2}
+  - {fileID: 11400000, guid: 73fe78bee4cc22f43af92f0abc995aad, type: 2}
+  - {fileID: 11400000, guid: 010642fed85082046a4df4687dcb2bd5, type: 2}
+  - {fileID: 11400000, guid: 2a3f72b1b33efb64f9a82053876b5fbf, type: 2}
+  - {fileID: 11400000, guid: 1b6396cebc5b48e409149eb444f0934c, type: 2}
+  - {fileID: 11400000, guid: 6b8be5aa12c8fbe4f88f7a940a929d98, type: 2}
+  - {fileID: 11400000, guid: b7b505ae88575bb42881fed4c60dabd6, type: 2}
+  - {fileID: 11400000, guid: 49ca4fa2e377235479f46b9d274b93c0, type: 2}
+  - {fileID: 11400000, guid: f8172171d42704e48808017e00b4c359, type: 2}
+  - {fileID: 11400000, guid: 6ef0df9daa42d6e45b8519338b9caccd, type: 2}
+  - {fileID: 11400000, guid: 338a9b4ccd1ac6e49bc72d21b50dc7c1, type: 2}
+  - {fileID: 11400000, guid: 21e454f7803a67c4db153703e922cdc0, type: 2}
+  - {fileID: 11400000, guid: fd78947417ab79a4e80fa162192b6136, type: 2}
+  - {fileID: 11400000, guid: cdb4b48c0aab16342ba016b1597d8732, type: 2}
   fireParticles: {fileID: 1677345948488936567, guid: 641c656558d8a2443b20700deb95d497, type: 3}
   waterParticles: {fileID: 1677345948488936567, guid: 6cd8062fa8ae3d14a98beda67e5824ad, type: 3}
   grassParticles: {fileID: 1677345948488936567, guid: 8577c9637c93ae2469ca4065ca9c14b2, type: 3}
