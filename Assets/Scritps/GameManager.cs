@@ -94,7 +94,6 @@ public class GameManager : MonoBehaviour
     public void ChangeGameState(GameState newGameState)
     {
         StopAllCoroutines();
-        Debug.Log(newGameState);
         StartCoroutine(ChangeGameStateRoutine(newGameState));
 
     }
@@ -539,34 +538,21 @@ public class GameManager : MonoBehaviour
     {
         GameObject cam = Camera.main.gameObject;
 
-        if (cam == null)
-            yield break;
 
         Transform camTransform = cam.transform;
         Animator animator = cam.GetComponent<Animator>();
 
-        if (animator == null)
-            yield break;
-
         animator.SetTrigger("NewScene");
 
-        var moveTween = camTransform.DOLocalMove(
+        camTransform.DOLocalMove(
             new Vector3(pos.x, pos.y, -10),
             0.2f
         ).SetLink(cam);
 
-        // Wait for the Animator to process the trigger
-        yield return null;
-
-        // Get the animation duration
         float animationLength = animator.GetCurrentAnimatorStateInfo(0).length - 0.05f;
 
-        // Wait for the animation to finish
         yield return new WaitForSeconds(animationLength);
 
-        // Clean up
-        if (camTransform != null)
-            camTransform.DOKill();
 
         SceneManager.LoadScene(index);
     }
