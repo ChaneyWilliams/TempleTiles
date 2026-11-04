@@ -38,6 +38,9 @@ MonoBehaviour:
     m_path: Assets/Scenes/Level3.unity
     m_guid: e23aa503932060848b3864e9bfb06437
   - m_enabled: 1
+    m_path: Assets/Scenes/Level4.unity
+    m_guid: 0d5bcfc0bde06454dac2f8a0b2a71a29
+  - m_enabled: 1
     m_path: Assets/Scenes/WinScene.unity
     m_guid: afe19056c7f06914295f869559727e6f
   m_HasScriptingDefines: 0

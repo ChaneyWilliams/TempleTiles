@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     public void MoveLeft()
     {
         Vector3 target = new Vector3(transform.position.x - 0.5f, transform.position.y, transform.position.z);
-        TweenHelper.Move(transform, target);
+        //TweenHelper.Move(transform, target);
         hasMoved = false;
     }
 }

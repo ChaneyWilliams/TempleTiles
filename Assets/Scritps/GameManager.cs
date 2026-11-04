@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 public class GameManager : MonoBehaviour
 {
     public string levelTitle = "";
@@ -536,7 +537,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator LevelTransition(Vector3 pos, int index)
     {
         GameObject cam = Camera.main.gameObject;
-        cam.transform.position = new Vector3(pos.x, pos.y, -10.0f);
+        cam.transform.DOLocalMove(new Vector3 (pos.x, pos.y, -10), 0.2f);
         Animator animator = cam.GetComponent<Animator>();
         animator.SetTrigger("NewScene");
         yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length - 0.1f);
