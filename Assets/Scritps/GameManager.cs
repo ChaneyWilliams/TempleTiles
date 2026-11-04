@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
     }
 
     public int moveCounter = 0;
+    private bool nextLevelCalled = false;
 
     void Awake()
     {
@@ -72,7 +73,7 @@ public class GameManager : MonoBehaviour
             map = GameObject.FindWithTag("Tilemap")?.GetComponent<Tilemap>();
         if (previewMap == null)
             previewMap = GameObject.FindWithTag("PreviewMap")?.GetComponent<Tilemap>();
-        if(topRowStart == null)
+        if (topRowStart == null)
             topRowStart = GameObject.FindGameObjectWithTag("TopRow")?.GetComponent<Transform>();
         dataFromTile = new Dictionary<TileBase, TileData>();
 
@@ -84,7 +85,7 @@ public class GameManager : MonoBehaviour
                     dataFromTile.Add(tile, tileData);
             }
         }
-        
+
         //SyncEntireSpecialMaps();
         SetLivesCounterTiles();
         SpellLevelTitle();
@@ -537,16 +538,45 @@ public class GameManager : MonoBehaviour
     private IEnumerator LevelTransition(Vector3 pos, int index)
     {
         GameObject cam = Camera.main.gameObject;
-        cam.transform.DOLocalMove(new Vector3 (pos.x, pos.y, -10), 0.2f);
-        Animator animator = cam.GetComponent<Animator>();
-        animator.SetTrigger("NewScene");
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length - 0.1f);
-        Debug.Log("NETX");
-        SceneManager.LoadScene(index);
 
+        if (cam == null)
+            yield break;
+
+        Transform camTransform = cam.transform;
+        Animator animator = cam.GetComponent<Animator>();
+
+        if (animator == null)
+            yield break;
+
+        animator.SetTrigger("NewScene");
+
+        var moveTween = camTransform.DOLocalMove(
+            new Vector3(pos.x, pos.y, -10),
+            0.2f
+        ).SetLink(cam);
+
+        // Wait for the Animator to process the trigger
+        yield return null;
+
+        // Get the animation duration
+        float animationLength = animator.GetCurrentAnimatorStateInfo(0).length - 0.05f;
+
+        // Wait for the animation to finish
+        yield return new WaitForSeconds(animationLength);
+
+        // Clean up
+        if (camTransform != null)
+            camTransform.DOKill();
+
+        SceneManager.LoadScene(index);
     }
+
     public void LoadLevel(Vector3 pos, int index)
     {
+
+        if (instance == null && nextLevelCalled)
+            return;
+        nextLevelCalled = true;
         StartCoroutine(LevelTransition(pos, index));
     }
     private void SpellLevelTitle()
