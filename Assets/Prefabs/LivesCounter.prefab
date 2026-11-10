@@ -63,6 +63,12 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 766981b6f82813e498c1fccd2ec858a4, type: 3}
     - {fileID: 8300000, guid: 8357267a993c7f54f9ac745b15d66032, type: 3}
     - {fileID: 8300000, guid: 5e3843693e865934a91151f9d4dfc962, type: 3}
+  - name: ClickButton
+    audioClip:
+    - {fileID: 8300000, guid: 19cfb01fd513a4741bc2b4fad9106e16, type: 3}
+  - name: HighlightButton
+    audioClip:
+    - {fileID: 8300000, guid: 5b8b07493cb6f2f49951c2b7a27282bc, type: 3}
   lives: 3
   currentLevelIndex: 0
   globalVolume: 1

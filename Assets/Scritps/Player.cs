@@ -138,6 +138,7 @@ public class Player : MonoBehaviour
     {
         if (context.performed)
         {
+            PlayButtonClick();
             paused = !paused;
             pauseMenu.SetActive(paused);
             LivesCounter.instance.SaveProgress();
@@ -146,16 +147,19 @@ public class Player : MonoBehaviour
     }
     public void ResumeGame()
     {
+        PlayButtonClick();
         paused = false;
         pauseMenu.SetActive(paused);
     }
     public void MainMenu()
     {
+        PlayButtonClick();
         LivesCounter.instance.SaveProgress();
         GameManager.instance.LoadLevel(transform.position, 0);
     }
     public void QuitGame()
     {
+        PlayButtonClick();
         LivesCounter.instance.SaveProgress();
         Application.Quit();
     }
@@ -166,6 +170,16 @@ public class Player : MonoBehaviour
         LivesCounter.instance.PlayRandomClip("PlayerDie");
         GameManager.instance.ResetLevel();
         LivesCounter.instance.SubLives();
+    }
+
+    public void PlayButtonHover()
+    {
+        LivesCounter.instance.PlayRandomClip("HighlightButton");
+    }
+
+    public void PlayButtonClick()
+    {
+        LivesCounter.instance.PlayRandomClip("ClickButton");
     }
 
 }

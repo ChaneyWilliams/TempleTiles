@@ -21,6 +21,7 @@ public class MainMenu : MonoBehaviour
     }
     public void StartGame()
     {
+        PlayClickSound();
         // Reset lives and level index when starting a new game
         LivesCounter.instance.SetLives(3);
         LivesCounter.instance.SetCurrentLevelIndex(0);
@@ -29,6 +30,7 @@ public class MainMenu : MonoBehaviour
     }
     public void LoadGame()
     {
+        PlayClickSound();
         // Load the saved level index
         int savedLevelIndex = LivesCounter.instance.currentLevelIndex;
         GameManager.instance.LoadLevel(GameManager.instance.transform.position, savedLevelIndex);
@@ -37,14 +39,16 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+        PlayClickSound();
     }
 
-    IEnumerator TitleScreenAnimation()
+    public void PlayHoverSound()
     {
-       // nextTurn = false;
-        GameManager.instance.ChangeGameState(GameManager.GameState.LevelTurn);
-        yield return new WaitForSeconds(timeBetweenTurns);
-        //nextTurn = true;
-        
+        LivesCounter.instance.PlayRandomClip("HighlightButton");
+    }
+
+    public void PlayClickSound()
+    {
+        LivesCounter.instance.PlayRandomClip("ClickButton");
     }
 }
