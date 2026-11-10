@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1611118744290399797}
   - component: {fileID: 2445944356466850756}
+  - component: {fileID: 7813828037117191659}
   m_Layer: 0
   m_Name: LivesCounter
   m_TagString: Untagged
@@ -44,4 +45,124 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0b7077a5fb2e8a41854f5f6d3da7bd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  soundEffectGroups:
+  - name: PlayerMove
+    audioClip:
+    - {fileID: 8300000, guid: 609a3c2adc732614bba4f03107ec09dd, type: 3}
+    - {fileID: 8300000, guid: db69023a1db802541895680c42e918a7, type: 3}
+    - {fileID: 8300000, guid: 9af40f2f121aafe42860287f40239fe5, type: 3}
+  - name: TileChange
+    audioClip:
+    - {fileID: 8300000, guid: 9d3ebf51cfc671148a3ff90850606d79, type: 3}
+    - {fileID: 8300000, guid: a5ee75ac91ccf004e93f2b44270818f5, type: 3}
+    - {fileID: 8300000, guid: d67ab6f6c870428418adfbef3fef1406, type: 3}
+    - {fileID: 8300000, guid: 17a9dc9ca02218a4eb812e05f9f33cdb, type: 3}
+    - {fileID: 8300000, guid: ad06dd281fec4734f8aaed23b2554ed5, type: 3}
+  - name: PlayerDie
+    audioClip:
+    - {fileID: 8300000, guid: 766981b6f82813e498c1fccd2ec858a4, type: 3}
+    - {fileID: 8300000, guid: 8357267a993c7f54f9ac745b15d66032, type: 3}
+    - {fileID: 8300000, guid: 5e3843693e865934a91151f9d4dfc962, type: 3}
   lives: 3
+  currentLevelIndex: 0
+  globalVolume: 1
+  red: 0
+  green: 0
+  blue: 0
+--- !u!82 &7813828037117191659
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031166794199120606}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

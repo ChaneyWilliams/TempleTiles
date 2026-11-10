@@ -122,6 +122,7 @@ public class GameManager : MonoBehaviour
                     map.SetTile(Vector3Int.FloorToInt(livesOnesPlace), numberTiles[ones]);
                     map.SetTile(Vector3Int.FloorToInt(livesTensPlace), numberTiles[tens]);
                 }
+                LivesCounter.instance.PlayRandomClip("PlayerMove");
                 yield break;
 
             case GameState.LevelTurn:
@@ -182,6 +183,7 @@ public class GameManager : MonoBehaviour
     public void ChangeEnvironment()
     {
         specialTiles.Clear();
+        bool hasChanged = false;
 
         BoundsInt bounds = map.cellBounds;
 
@@ -237,6 +239,10 @@ public class GameManager : MonoBehaviour
                  in environmentChanges)
         {
             map.SetTile(change.Key, change.Value);
+            hasChanged = true;
+            Tile tile= map.GetTile(change.Key) as Tile;
+            //SpriteRenderer spriteRenderer = tile.sprite;
+            
 
             TileData newTile = GetTileFromMap(change.Key);
 
@@ -333,12 +339,18 @@ public class GameManager : MonoBehaviour
         foreach (KeyValuePair<Vector3Int, TileBase> change in lifeChanges)
         {
             map.SetTile(change.Key, change.Value);
+            hasChanged = true;
         }
 
         // Initialize TTL for newly spawned grass.
         foreach (Vector3Int pos in newGrass)
         {
             SetGrassTTL(pos, 3);
+        }
+
+        if (hasChanged)
+        {
+            LivesCounter.instance.PlayRandomClip("TileChange");
         }
     }
 

@@ -9,7 +9,7 @@ public class Tween : MonoBehaviour
         //transform.DOLocalMoveY(transform.position.y + 1.0f, 1.0f, true);
         //transform.DOLocalMoveY(5.0f, 1.0f, true);
 
-        TweenHelper.PunchUp(transform);
+        TweenHelper.PopAndSpin(transform);
     }
 
 }

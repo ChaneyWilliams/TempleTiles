@@ -1,9 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using System;
+
 
 public class LivesCounter : MonoBehaviour
 {
     public static LivesCounter instance;
+    [SerializeField] private SoundEffectGroup[] soundEffectGroups;
+
+    private Dictionary<string, List<AudioClip>> soundDictionary;
 
     public int lives = 3;
     public int currentLevelIndex = 0;
@@ -12,6 +18,10 @@ public class LivesCounter : MonoBehaviour
     public float green = 0.0f;
     public float blue = 0.0f;
 
+    AudioSource audioSource;
+
+
+    
     private const string LivesKey = "SavedLives";
     private const string LevelKey = "SavedLevelIndex";
     private const string GlobalVolumeKey = "GlobalVolume";
@@ -38,6 +48,12 @@ public class LivesCounter : MonoBehaviour
         green = PlayerPrefs.GetFloat(GreenKey, 0.0f);
         blue = PlayerPrefs.GetFloat(BlueKey, 0.0f);
 
+        InitializeDictionary();
+    }
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void SetLives(int newLives)
@@ -104,5 +120,52 @@ public class LivesCounter : MonoBehaviour
     {
         if (paused)
             SaveProgress();
+    }
+
+    
+
+    private void InitializeDictionary()
+    {
+        soundDictionary = new Dictionary<string, List<AudioClip>>();
+        foreach(SoundEffectGroup soundEffectGroup in soundEffectGroups)
+        {
+            soundDictionary[soundEffectGroup.name] = soundEffectGroup.audioClip;
+        }
+    }
+
+    public void PlayRandomClip(string name)
+    {
+        if (soundDictionary.ContainsKey(name))
+        {
+            
+            List<AudioClip> audioClips = soundDictionary[name];
+            if (audioClips.Count > 0)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, audioClips.Count);
+                AudioClip selectedClip = audioClips[randomIndex];
+                audioSource.volume = 1.0f;
+                audioSource.PlayOneShot(selectedClip);
+                Debug.Log("Playing sound: " + name);
+            }
+            else
+            {
+                Debug.Log("Sound group is empty: " + name);
+            }
+            return;
+
+        }
+        Debug.Log("Sound not found: " + name);
+    }
+
+    public void PlayNoise()
+    {
+        PlayRandomClip("PlayerMove");
+    }
+
+    [System.Serializable]
+    public struct SoundEffectGroup
+    {
+        public string name;
+        public List<AudioClip> audioClip;
     }
 }

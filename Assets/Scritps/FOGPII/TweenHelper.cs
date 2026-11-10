@@ -23,4 +23,14 @@ public static class TweenHelper
         sq.Join(transform.DOPunchScale(new Vector3(1.0f, 0.5f, 1.0f), 1.0f));
         return sq;
     }
+
+    public static Sequence PopAndSpin(Transform transform)
+    {
+        Sequence sq = DOTween.Sequence();
+
+        sq.Append(transform.DOPunchRotation(new Vector3(0.0f, 0.0f, 15.0f), 0.5f));
+        sq.Join(transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 0.5f));
+
+        return sq;
+    }
 }

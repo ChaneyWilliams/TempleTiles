@@ -163,6 +163,7 @@ public class Player : MonoBehaviour
 
     public void PlayerDie()
     {
+        LivesCounter.instance.PlayRandomClip("PlayerDie");
         GameManager.instance.ResetLevel();
         LivesCounter.instance.SubLives();
     }
