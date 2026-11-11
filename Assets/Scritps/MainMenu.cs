@@ -5,6 +5,7 @@ public class MainMenu : MonoBehaviour
 {
     public float timeBetweenTurns = 1.0f;
     public GameObject continueButton;
+    bool startGame = false;
     void Start()
     {
         if (LivesCounter.instance.GetLives() <= 0 || LivesCounter.instance.currentLevelIndex == 0)
@@ -21,7 +22,11 @@ public class MainMenu : MonoBehaviour
     }
     public void StartGame()
     {
-        PlayClickSound();
+        if (!startGame)
+        {
+            startGame = true;
+            PlayClickSound();
+        }
         // Reset lives and level index when starting a new game
         LivesCounter.instance.SetLives(3);
         LivesCounter.instance.SetCurrentLevelIndex(0);
@@ -30,7 +35,11 @@ public class MainMenu : MonoBehaviour
     }
     public void LoadGame()
     {
-        PlayClickSound();
+        if (!startGame)
+        {
+            startGame = true;
+            PlayClickSound();
+        }
         // Load the saved level index
         int savedLevelIndex = LivesCounter.instance.currentLevelIndex;
         GameManager.instance.LoadLevel(GameManager.instance.transform.position, savedLevelIndex);
