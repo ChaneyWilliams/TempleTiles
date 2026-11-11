@@ -21,7 +21,7 @@ public class LivesCounter : MonoBehaviour
     AudioSource audioSource;
 
 
-    
+
     private const string LivesKey = "SavedLives";
     private const string LevelKey = "SavedLevelIndex";
     private const string GlobalVolumeKey = "GlobalVolume";
@@ -70,7 +70,7 @@ public class LivesCounter : MonoBehaviour
         lives = Mathf.Max(0, lives - 1);
         if (lives == 0)
         {
-            SceneManager.LoadScene(0); 
+            SceneManager.LoadScene(0);
         }
         SaveProgress();
     }
@@ -83,15 +83,19 @@ public class LivesCounter : MonoBehaviour
     public void SetGlobalVolume(float newVolume)
     {
         globalVolume = Mathf.Clamp01(newVolume);
+        audioSource.volume = globalVolume;
         PlayerPrefs.SetFloat(GlobalVolumeKey, globalVolume);
         PlayerPrefs.Save();
+    }
+    public float GetGlobalVolume()
+    {
+        return globalVolume;
     }
     public void SetGlobalTint(Color color)
     {
         red = color.r;
         green = color.g;
         blue = color.b;
-        Debug.Log($"Saving: {red}, {green}, {blue}");
         PlayerPrefs.SetFloat(RedKey, red);
         PlayerPrefs.SetFloat(GreenKey, green);
         PlayerPrefs.SetFloat(BlueKey, blue);
@@ -122,12 +126,12 @@ public class LivesCounter : MonoBehaviour
             SaveProgress();
     }
 
-    
+
 
     private void InitializeDictionary()
     {
         soundDictionary = new Dictionary<string, List<AudioClip>>();
-        foreach(SoundEffectGroup soundEffectGroup in soundEffectGroups)
+        foreach (SoundEffectGroup soundEffectGroup in soundEffectGroups)
         {
             soundDictionary[soundEffectGroup.name] = soundEffectGroup.audioClip;
         }
@@ -137,15 +141,13 @@ public class LivesCounter : MonoBehaviour
     {
         if (soundDictionary.ContainsKey(name))
         {
-            
+
             List<AudioClip> audioClips = soundDictionary[name];
             if (audioClips.Count > 0)
             {
                 int randomIndex = UnityEngine.Random.Range(0, audioClips.Count);
                 AudioClip selectedClip = audioClips[randomIndex];
-                audioSource.volume = 1.0f;
                 audioSource.PlayOneShot(selectedClip);
-                Debug.Log("Playing sound: " + name);
             }
             else
             {
@@ -157,10 +159,6 @@ public class LivesCounter : MonoBehaviour
         Debug.Log("Sound not found: " + name);
     }
 
-    public void PlayNoise()
-    {
-        PlayRandomClip("PlayerMove");
-    }
 
     [System.Serializable]
     public struct SoundEffectGroup

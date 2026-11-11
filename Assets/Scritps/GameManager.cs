@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
                     map.SetTile(Vector3Int.FloorToInt(livesOnesPlace), numberTiles[ones]);
                     map.SetTile(Vector3Int.FloorToInt(livesTensPlace), numberTiles[tens]);
                 }
-                LivesCounter.instance.PlayRandomClip("PlayerMove");
+                
                 yield break;
 
             case GameState.LevelTurn:
@@ -172,6 +172,7 @@ public class GameManager : MonoBehaviour
                 tileInfo.WaterTile(entered);
                 break;
             case TileData.TileState.GoalTile:
+                LivesCounter.instance.PlayRandomClip("WinSound");
                 tileInfo.GoalTile(entered);
                 break;
             case TileData.TileState.NormalTile:

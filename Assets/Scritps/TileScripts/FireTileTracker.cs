@@ -9,6 +9,7 @@ public class FireTileTracker : MonoBehaviour
         TTL -=1;
         if(TTL <= 0)
         {
+            LivesCounter.instance.PlayRandomClip("FireDies");
             GameManager.instance.map.SetTile(Vector3Int.FloorToInt(transform.position), GameManager.instance.GetTileBase(0));
         }
     }

@@ -48,9 +48,8 @@ MonoBehaviour:
   soundEffectGroups:
   - name: PlayerMove
     audioClip:
-    - {fileID: 8300000, guid: 609a3c2adc732614bba4f03107ec09dd, type: 3}
-    - {fileID: 8300000, guid: db69023a1db802541895680c42e918a7, type: 3}
-    - {fileID: 8300000, guid: 9af40f2f121aafe42860287f40239fe5, type: 3}
+    - {fileID: 8300000, guid: b01c60243f31e244e90ed1d92b231b58, type: 3}
+    - {fileID: 8300000, guid: f93f70708d786a54a84297f687a5b6c5, type: 3}
   - name: TileChange
     audioClip:
     - {fileID: 8300000, guid: 9d3ebf51cfc671148a3ff90850606d79, type: 3}
@@ -69,6 +68,19 @@ MonoBehaviour:
   - name: HighlightButton
     audioClip:
     - {fileID: 8300000, guid: 5b8b07493cb6f2f49951c2b7a27282bc, type: 3}
+  - name: WinSound
+    audioClip:
+    - {fileID: 8300000, guid: 907d6d94ee7ad8d42b5a3742291c6034, type: 3}
+  - name: TilePickup
+    audioClip:
+    - {fileID: 8300000, guid: 1497292688dd04842a15800a4342ab53, type: 3}
+  - name: TileDrop
+    audioClip:
+    - {fileID: 8300000, guid: 113a234683411594e9f656632c76b02d, type: 3}
+    - {fileID: 8300000, guid: e6d897718b491624991a64ba94d59d95, type: 3}
+  - name: FireDies
+    audioClip:
+    - {fileID: 8300000, guid: ff8a6e9dc5333374a9956fb2b2ede441, type: 3}
   lives: 3
   currentLevelIndex: 0
   globalVolume: 1

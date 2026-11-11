@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     TileBase currentTile;
     SpriteRenderer spriteRenderer;
     bool paused = false;
+    bool checkedTile = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -34,7 +35,7 @@ public class Player : MonoBehaviour
             Color color = new Color(0.25f, 0.25f, 0.25f, alpha);
             GameManager.instance.SetPreviewTile(pickUpPos, color, GameManager.instance.GetTileBase(6));
         }
-        else if(currentTile != null && GameManager.instance.GetTileFromMap(pickUpPos) == null)
+        else if (currentTile != null && GameManager.instance.GetTileFromMap(pickUpPos) == null)
         {
             Color color = new Color(0.75f, 0.75f, 0.75f, alpha);
             GameManager.instance.SetPreviewTile(pickUpPos, color, currentTile);
@@ -44,8 +45,9 @@ public class Player : MonoBehaviour
         rb.MovePosition(Vector3.MoveTowards(rb.position, moveTargetPos, speed * Time.fixedDeltaTime));
 
 
-        if (Vector3.Distance(rb.position, moveTargetPos) < 0.01f)
+        if (!checkedTile && Vector3.Distance(rb.position, moveTargetPos) < 0.01f)
         {
+            checkedTile = true;
             rb.position = moveTargetPos;
             TileData currentTile = GameManager.instance.GetTileFromMap(gameObject.transform.position);
             if (currentTile == null)
@@ -93,44 +95,51 @@ public class Player : MonoBehaviour
                     return;
                 }
             }
+            checkedTile = false;
+            LivesCounter.instance.PlayRandomClip("PlayerMove");
             GameManager.instance.ChangeGameState(GameManager.GameState.LevelTurn);
         }
     }
 
     public void PickupTile(InputAction.CallbackContext context)
     {
-        TileData tile = GameManager.instance.GetTileFromMap(pickUpPos);
-        if (currentTile == null)
+        if (context.performed)
         {
-            if (tile == null) return;
-            switch (tile.tileState)
+            TileData tile = GameManager.instance.GetTileFromMap(pickUpPos);
+            if (currentTile == null)
             {
-                case TileData.TileState.NormalTile:
-                    currentTile = GameManager.instance.GetTileBase(0);
-                    break;
-                case TileData.TileState.FireTile:
-                    currentTile = GameManager.instance.GetTileBase(1);
-                    break;
-                case TileData.TileState.GrassTile:
-                    currentTile = GameManager.instance.GetTileBase(2);
-                    break;
-                case TileData.TileState.WaterTile:
-                    currentTile = GameManager.instance.GetTileBase(3);
-                    break;
-                case TileData.TileState.UITile:
-                    currentTile = GameManager.instance.TileAtPos(pickUpPos);
-                    break;
-                default:
-                    return;
+                if (tile == null) return;
+                switch (tile.tileState)
+                {
+                    case TileData.TileState.NormalTile:
+                        currentTile = GameManager.instance.GetTileBase(0);
+                        break;
+                    case TileData.TileState.FireTile:
+                        currentTile = GameManager.instance.GetTileBase(1);
+                        break;
+                    case TileData.TileState.GrassTile:
+                        currentTile = GameManager.instance.GetTileBase(2);
+                        break;
+                    case TileData.TileState.WaterTile:
+                        currentTile = GameManager.instance.GetTileBase(3);
+                        break;
+                    case TileData.TileState.UITile:
+                        currentTile = GameManager.instance.TileAtPos(pickUpPos);
+                        break;
+                    default:
+                        return;
+                }
+                LivesCounter.instance.PlayRandomClip("TilePickup");
+                GameManager.instance.map.SetTile(Vector3Int.FloorToInt(pickUpPos), null);
             }
-            GameManager.instance.map.SetTile(Vector3Int.FloorToInt(pickUpPos), null);
-        }
-        else
-        {
-            if (tile == null)
+            else
             {
-                GameManager.instance.map.SetTile(Vector3Int.FloorToInt(pickUpPos), currentTile);
-                currentTile = null;
+                if (tile == null)
+                {
+                    LivesCounter.instance.PlayRandomClip("TileDrop");
+                    GameManager.instance.map.SetTile(Vector3Int.FloorToInt(pickUpPos), currentTile);
+                    currentTile = null;
+                }
             }
         }
     }
@@ -142,7 +151,7 @@ public class Player : MonoBehaviour
             paused = !paused;
             pauseMenu.SetActive(paused);
             LivesCounter.instance.SaveProgress();
-            
+
         }
     }
     public void ResumeGame()

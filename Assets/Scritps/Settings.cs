@@ -6,16 +6,18 @@ public class Settings : MonoBehaviour
     public Slider redSlider;
     public Slider greenSlider;
     public Slider blueSlider;
+    public Slider volumeSlider;
     public Material mat;
     float red;
     float green;
     float blue;
-    
+
     void Start()
     {
-       red = redSlider.value = LivesCounter.instance.red;
+        red = redSlider.value = LivesCounter.instance.red;
         green = greenSlider.value = LivesCounter.instance.green;
-       blue = blueSlider.value = LivesCounter.instance.blue;
+        blue = blueSlider.value = LivesCounter.instance.blue;
+        volumeSlider.value = LivesCounter.instance.GetGlobalVolume();
 
     }
     public void ChangeRedVal()
@@ -32,6 +34,10 @@ public class Settings : MonoBehaviour
     public void ChangeBlueVal()
     {
         blue = blueSlider.value;
+    }
+    public void ChangeVolumeVal()
+    {
+        LivesCounter.instance.SetGlobalVolume(volumeSlider.value);
     }
     public void SetMaterial()
     {
