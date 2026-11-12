@@ -26,19 +26,22 @@ MonoBehaviour:
     m_path: Assets/Scenes/MainMenu.unity
     m_guid: 45f1e51b882409540ba400db0c5a12ad
   - m_enabled: 1
-    m_path: Assets/Scenes/Level0.unity
+    m_path: Assets/Scenes/WASDTutorial.unity
     m_guid: 0bbad3a1b793e1645a7e724b1f7068ec
   - m_enabled: 1
-    m_path: Assets/Scenes/Level1.unity
+    m_path: Assets/Scenes/SpaceTutorial.unity
+    m_guid: 2cd485ac46954d04099cadada0b544ef
+  - m_enabled: 1
+    m_path: Assets/Scenes/LeftClickTutorial.unity
     m_guid: 9b3cf711a810b2a4ba18a512c931eec4
   - m_enabled: 1
-    m_path: Assets/Scenes/Level2.unity
+    m_path: Assets/Scenes/OnlyPlaceOnVoid.unity
     m_guid: 50dd5042f2f5d5f48b498dc072d17ec8
   - m_enabled: 1
-    m_path: Assets/Scenes/Level3.unity
+    m_path: Assets/Scenes/TilesAffectTiles.unity
     m_guid: e23aa503932060848b3864e9bfb06437
   - m_enabled: 1
-    m_path: Assets/Scenes/Level4.unity
+    m_path: Assets/Scenes/AllAreTiles.unity
     m_guid: 0d5bcfc0bde06454dac2f8a0b2a71a29
   - m_enabled: 1
     m_path: Assets/Scenes/WinScene.unity

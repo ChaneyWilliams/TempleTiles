@@ -93,7 +93,6 @@ public class GameManager : MonoBehaviour
 
     public void ChangeGameState(GameState newGameState)
     {
-        StopAllCoroutines();
         StartCoroutine(ChangeGameStateRoutine(newGameState));
 
     }
@@ -495,7 +494,7 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    void SynchMoveCounterTiles()
+    public void SynchMoveCounterTiles()
     {
         TileBase onesTile = TileAtPos(moveOnesPlace);
         TileBase tensTile = TileAtPos(movesTensPlace);
@@ -516,7 +515,7 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    void SynchLivesCounterTiles()
+    public void SynchLivesCounterTiles()
     {
 
         TileBase onesTile = TileAtPos(livesOnesPlace);
@@ -525,7 +524,7 @@ public class GameManager : MonoBehaviour
         int total = numberTiles.IndexOf(tensTile) * 10 + numberTiles.IndexOf(onesTile);
         LivesCounter.instance.SetLives(total);
     }
-    void SetLivesCounterTiles()
+    public void SetLivesCounterTiles()
     {
         int ones = LivesCounter.instance.GetLives() % 10;
         int tens = (LivesCounter.instance.GetLives() / 10) % 10;

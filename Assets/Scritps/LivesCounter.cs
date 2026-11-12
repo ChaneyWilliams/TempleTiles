@@ -64,6 +64,11 @@ public class LivesCounter : MonoBehaviour
         lives = newLives;
         SaveProgress();
     }
+    public void AddLife()
+    {
+        lives += 1;
+        GameManager.instance.SetLivesCounterTiles();
+    }
 
     public void SubLives()
     {

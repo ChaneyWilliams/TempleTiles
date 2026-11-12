@@ -143,6 +143,15 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    public void SkipTurn(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            LivesCounter.instance.PlayRandomClip("PlayerMove");
+            GameManager.instance.ChangeGameState(GameManager.GameState.LevelTurn);
+        }
+    }
     public void Pause(InputAction.CallbackContext context)
     {
         if (context.performed)

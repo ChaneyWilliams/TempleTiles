@@ -39,6 +39,6 @@ Material:
     m_Floats:
     - _Opacity: 0.0001
     m_Colors:
-    - _Tint: {r: 100, g: 70, b: 197, a: 1}
+    - _Tint: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
