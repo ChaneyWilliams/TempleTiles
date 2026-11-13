@@ -291,7 +291,8 @@ public class GameManager : MonoBehaviour
 
             switch (tile.tileState)
             {
-                case TileData.TileState.NormalTile:
+                case TileData.TileState.NormalTile:  
+                case TileData.TileState.WallTile:
                     // Birth: exactly 3 grass neighbors.
                     if (grassCount == 3)
                     {
