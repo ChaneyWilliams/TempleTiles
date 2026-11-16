@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     private Vector3 livesOnesPlace = new Vector3(-3.5f, -6.5f, 0.0f);
     private Vector3 livesTensPlace = new Vector3(-4.5f, -6.5f, 0.0f);
 
+    private int grassTTL = 2;
+
 
     private readonly List<Vector3Int> gameOfLifeDirections = new List<Vector3Int>
     {
@@ -249,7 +251,7 @@ public class GameManager : MonoBehaviour
             if (newTile != null &&
                 newTile.tileState == TileData.TileState.GrassTile)
             {
-                SetGrassTTL(change.Key, 3);
+                SetGrassTTL(change.Key, grassTTL);
             }
 
             if (newTile != null &&
@@ -346,7 +348,7 @@ public class GameManager : MonoBehaviour
         // Initialize TTL for newly spawned grass.
         foreach (Vector3Int pos in newGrass)
         {
-            SetGrassTTL(pos, 3);
+            SetGrassTTL(pos, grassTTL);
         }
 
         if (hasChanged)
