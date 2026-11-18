@@ -12,6 +12,7 @@ TagManager:
   - OnesPlace
   - TensPlace
   - TopRow
+  - Enemy
   layers:
   - Default
   - TransparentFX

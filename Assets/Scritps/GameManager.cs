@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
 
     public int moveCounter = 0;
     private bool nextLevelCalled = false;
+    private List<Enemy> enemies = new List<Enemy>();
 
     void Awake()
     {
@@ -86,6 +87,12 @@ public class GameManager : MonoBehaviour
                 if (!dataFromTile.ContainsKey(tile))
                     dataFromTile.Add(tile, tileData);
             }
+        }
+        GameObject[] stuff = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (GameObject go in stuff)
+        {
+            enemies.Add(go?.GetComponent<Enemy>());
         }
 
         //SyncEntireSpecialMaps();
@@ -123,12 +130,13 @@ public class GameManager : MonoBehaviour
                     map.SetTile(Vector3Int.FloorToInt(livesOnesPlace), numberTiles[ones]);
                     map.SetTile(Vector3Int.FloorToInt(livesTensPlace), numberTiles[tens]);
                 }
-                
+
                 yield break;
 
             case GameState.LevelTurn:
                 yield return new WaitForSeconds(timeBetweenTurns);
 
+                MoveEnemies();
                 ChangeEnvironment();
 
                 yield return new WaitForSeconds(timeBetweenTurns);
@@ -182,6 +190,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void MoveEnemies()
+    {
+        foreach (Enemy enemy in enemies)
+            enemy.Move();
+    }
     public void ChangeEnvironment()
     {
         specialTiles.Clear();
@@ -242,9 +255,9 @@ public class GameManager : MonoBehaviour
         {
             map.SetTile(change.Key, change.Value);
             hasChanged = true;
-            Tile tile= map.GetTile(change.Key) as Tile;
+            Tile tile = map.GetTile(change.Key) as Tile;
             //SpriteRenderer spriteRenderer = tile.sprite;
-            
+
 
             TileData newTile = GetTileFromMap(change.Key);
 
@@ -293,7 +306,7 @@ public class GameManager : MonoBehaviour
 
             switch (tile.tileState)
             {
-                case TileData.TileState.NormalTile:  
+                case TileData.TileState.NormalTile:
                 case TileData.TileState.WallTile:
                     // Birth: exactly 3 grass neighbors.
                     if (grassCount == 3)
@@ -431,12 +444,6 @@ public class GameManager : MonoBehaviour
         return grassCount;
     }
 
-    bool ShouldGrassSurvive(Vector3Int position)
-    {
-        int grassCount = CountGrassNeighbors(position);
-
-        return grassCount == 2 || grassCount == 3;
-    }
 
 
 
@@ -470,18 +477,6 @@ public class GameManager : MonoBehaviour
     {
         particlesInstance = Instantiate(particleSystem, pos, Quaternion.identity);
     }
-
-
-    private void OnEnable()
-    {
-        //Tilemap.tilemapTileChanged += OnTilemapTileChanged;
-    }
-
-    private void OnDisable()
-    {
-        //Tilemap.tilemapTileChanged -= OnTilemapTileChanged;
-    }
-
 
 
     bool CheckMoveCounterTiles()
